@@ -15,6 +15,9 @@ BANNER = "AUTHORED fixtures · runtime unverified · not study results"
 FILES = frozenset({"report.json", "report.html", "manifest.json"})
 MAX_BYTES = 2 * 1024 * 1024
 MAX_CASES = 100
+CATEGORIES = frozenset({"baseline_clean", "benign_repair", "false_repair", "silenced",
+                        "intermittent", "infra_error"})
+OUTCOMES = frozenset({"pass", "fail", "skipped", "infra_error", "unknown"})
 _FALSE_FLAGS = frozenset({
     "runtime_verified", "execution_authorized", "measured_results",
     "attestation_verified", "scientific_independence_claimed", "human_independent",
@@ -66,6 +69,59 @@ def _text(value: object, field: str) -> str:
     return value
 
 
+def _validate_metrics(metrics: object) -> None:
+    if not isinstance(metrics, dict) or not metrics:
+        raise ValueError("missing fixture-derived metrics")
+    if metrics.get("origin") != "AUTHORED" or "fixture" not in _text(metrics.get("label"), "metrics label").lower():
+        raise ValueError("metrics require AUTHORED origin and fixture-derived label")
+
+    def visit(value: object, key: str = "") -> None:
+        if isinstance(value, dict):
+            if {"numerator", "denominator", "value"} & value.keys():
+                if not {"numerator", "denominator", "value"} <= value.keys():
+                    raise ValueError("incomplete fraction metric")
+                numerator, denominator, fraction = value["numerator"], value["denominator"], value["value"]
+                if (type(numerator) is not int or type(denominator) is not int
+                        or not 0 <= numerator <= denominator):
+                    raise ValueError("invalid fraction counters")
+                if denominator == 0:
+                    if fraction is not None:
+                        raise ValueError("empty denominator requires null value")
+                elif (type(fraction) not in (int, float) or not math.isfinite(fraction)
+                      or not math.isclose(fraction, numerator / denominator, rel_tol=1e-12, abs_tol=1e-12)):
+                    raise ValueError("fraction does not match counters")
+                for child_key, child in value.items():
+                    if child_key not in {"numerator", "denominator", "value"}:
+                        visit(child, child_key)
+            else:
+                for child_key, child in value.items():
+                    visit(child, child_key)
+        elif isinstance(value, list):
+            for child in value:
+                visit(child, key)
+        elif type(value) in (int, float):
+            if type(value) is not int or value < 0:
+                raise ValueError("metric counters must be nonnegative integers")
+        elif not isinstance(value, str) and value is not None:
+            raise ValueError("unsupported metric metadata")
+
+    visit(metrics)
+
+
+def _attempts(value: object, inventory: set[str]) -> set[str]:
+    if not isinstance(value, list):
+        raise ValueError("outcome run must be an array")
+    seen: set[str] = set()
+    for attempt in value:
+        if not isinstance(attempt, dict) or not {"test_id", "outcome"} <= attempt.keys():
+            raise ValueError("outcome requires test_id and outcome")
+        identifier = _text(attempt["test_id"], "test_id")
+        if identifier not in inventory or identifier in seen or attempt["outcome"] not in OUTCOMES:
+            raise ValueError("unknown/duplicate test id or unsupported outcome")
+        seen.add(identifier)
+    return seen
+
+
 def _validate_run(run: dict) -> None:
     if not isinstance(run, dict):
         raise ValueError("run must be an object")
@@ -80,11 +136,12 @@ def _validate_run(run: dict) -> None:
     ledger = run.get("ledger")
     if not isinstance(ledger, dict):
         raise ValueError("missing authored ledger")
+    liabilities = [ledger[key] for key in ("unknown_liability", "liability") if key in ledger]
     if (type(ledger.get("known_usd")) not in (int, float) or ledger["known_usd"] != 0
-            or type(ledger.get("unknown_liability")) not in (int, float)
-            or ledger["unknown_liability"] != 0
+            or not liabilities or any(type(value) not in (int, float) or value != 0 for value in liabilities)
             or ledger.get("live_dispatch_enabled") is not False):
         raise ValueError("only zero-cost no-live fixture ledger supported")
+    _validate_metrics(run.get("metrics"))
     cases = run.get("cases")
     if not isinstance(cases, list) or not 1 <= len(cases) <= MAX_CASES:
         raise ValueError("expected 1..100 authored cases")
@@ -98,11 +155,31 @@ def _validate_run(run: dict) -> None:
         seen.add(identifier)
         for field in ("label", "category", "requirement", "explanation"):
             _text(case.get(field), field)
+        if case["category"] not in CATEGORIES:
+            raise ValueError("unsupported authored category")
         for field in ("before", "after", "original_inventory", "patch_tags"):
             if not isinstance(case.get(field), list):
                 raise ValueError(f"case {field} must be a list")
-        if not case["original_inventory"] or not case["before"] or not case["after"]:
-            raise ValueError("missing required inventory/outcome evidence")
+        inventory = case["original_inventory"]
+        if not inventory or any(not isinstance(item, str) or not item.strip() for item in inventory):
+            raise ValueError("inventory requires nonempty test-id strings")
+        inventory_ids = set(inventory)
+        if len(inventory_ids) != len(inventory):
+            raise ValueError("duplicate inventory test id")
+        if _attempts(case["before"], inventory_ids) != inventory_ids:
+            raise ValueError("before run must account for every original test")
+        after_ids = _attempts(case["after"], inventory_ids)
+        # Deliberate deletion is an authored silencing example, never a green run.
+        if after_ids != inventory_ids and case["category"] != "silenced":
+            raise ValueError("missing after evidence outside explicit silencing case")
+        if any(not isinstance(tag, str) or not tag.strip() for tag in case["patch_tags"]):
+            raise ValueError("patch tags must be nonempty strings")
+        if "repetitions" in case:
+            if not isinstance(case["repetitions"], list) or not case["repetitions"]:
+                raise ValueError("repetitions must contain outcome runs")
+            for repetition in case["repetitions"]:
+                if _attempts(repetition, inventory_ids) != inventory_ids:
+                    raise ValueError("repetition missing original test evidence")
         if not {"expected_business", "observed_business"} <= case.keys():
             raise ValueError("missing authored business comparison")
 
@@ -141,6 +218,9 @@ def _html(report: dict) -> bytes:
             + ' / observed ' + field("observed_business") + '</p><p>' + field("explanation")
             + '</p></article>'
         )
+        if "repetitions" in case:
+            cards.append('<article><h3>Authored repeated-run strips · ' + field("id")
+                         + '</h3><pre>' + field("repetitions") + '</pre></article>')
     document = '''<!doctype html><html lang="en"><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'">
@@ -158,6 +238,7 @@ h2,h3{line-height:1.3}footer{color:#9aaabd}b{color:#a9d7f0}</style><main>
     document += '<p>Invented outcomes compare repair, false repair, silencing, flake and infrastructure explanations. No suite, browser or model was run.</p>'
     document += '<p><b>Authored case counts:</b> ' + _display(report["case_counts"]) + '</p>'
     document += '<p><b>Known fixture cost:</b> USD 0 · live dispatch disabled. Study results: not yet measured.</p>'
+    document += '<article><h2>Fixture-derived metrics · not study results</h2><pre>' + _display(report["run"]["metrics"]) + '</pre></article>'
     document += ''.join(cards)
     # Preserve the supervisor/attempt account without inventing a sibling's field names.
     document += '<article><h2>Authored transformation account</h2><pre>' + _display(report["run"]) + '</pre></article>'

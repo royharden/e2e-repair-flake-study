@@ -44,3 +44,18 @@ symlinks/junctions/hardlinks, changed/missing/extra artifacts and pinned/unpinne
 tampering; inspect the rendered page; qualify filesystem containment and any
 runtime authorization boundary before activation. No test or runtime check ran
 during Dirty Mode construction.
+
+Contract v1.1 validation requires each outcome entry to contain a nonempty test_id
+from the unique original inventory and an outcome in pass/fail/skipped/infra_error/
+unknown. IDs are unique within each run. Before and repetition runs account for
+all original IDs; after can omit IDs only in an explicitly silenced authored case.
+Optional repetitions are displayed per run. The report does not treat silencing
+or omitted evidence as a green outcome. Other invalid inventory examples are
+rejected, rather than accepted as evidence. Categories use the declared finite
+set. Metrics require AUTHORED origin and a fixture-derived label, nonnegative
+integer counters, and complete numerator/denominator/value fractions. Fractions
+match their counters; a zero denominator has null value. Unknown/infra evidence
+is retained in the source account, never recast as measured green results.
+Scientific eligibility/denominator computation remains the engine's declared
+algorithm and requires later integrated validation. No scientific score is inferred.
+The ledger also accepts the contract's compatibility liability key only at zero.
