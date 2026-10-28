@@ -1,0 +1,139 @@
+{
+  "schema_revision": "m19-demo-construction-draft-v1",
+  "purpose": "demo_construction",
+  "status": "ADOPTED",
+  "disclaimer": "DELEGATED — delegated, not personally signed by the owner",
+  "authority": {
+    "order_reference": "t77u",
+    "evidence_kind": "current_user_owner_order_t77u_as_relayed_in_this_session",
+    "relayed_by_workspace_id": "0B33",
+    "drafted_by_workspace_id": "0D15",
+    "drafted_by_app_id": "0012",
+    "personal_owner_signature_claimed": false,
+    "adopted_by": "0B33_Codex_gpt-61-sol_N20IntM19",
+    "adopted_at": "2026-10-28T13:24:59.4032317-04:00",
+    "revocation_state": "not_revoked_at_adoption"
+  },
+  "source": {
+    "baseline_commit": "20033cd34c8a6946b620a4c220ac4d8305bcce8a",
+    "baseline_basis": "current_handoff_identifies_integration_worktree",
+    "current_complete_inventory_verified": false,
+    "historical_inventory_snapshot": "5452ed3a4664d5aaab445e9a2072a93029873e81",
+    "historical_inventory_limit": "26 included paths and 3 recursive exclusions; not new-source or rights authentication"
+  },
+  "scope_approval_delegated": {
+    "decision_ids": [
+      "DEMO-D01",
+      "DEMO-D02",
+      "DEMO-D03",
+      "DEMO-D04",
+      "DEMO-D05",
+      "DEMO-D06",
+      "DEMO-D07",
+      "DEMO-D08",
+      "DEMO-D09",
+      "DEMO-D10",
+      "DEMO-D11",
+      "DEMO-D12"
+    ],
+    "decision_reference": "M19-DELEGATED-DEMO-GATE-REVIEW.md",
+    "permitted": [
+      "dirty_static_source_construction",
+      "synthetic_demo_fixture_source",
+      "static_review",
+      "local_scoped_integration_by_int"
+    ],
+    "held": [
+      "credentials_accounts",
+      "spend",
+      "live_unit_e2e_model_browser_container_runs",
+      "install_network",
+      "real_unsealing",
+      "real_heldout_or_study_data",
+      "push_publish",
+      "licence_commitments",
+      "delete"
+    ],
+    "spend_usd": 0,
+    "scientific_plan_mutated": false,
+    "prior_p6_timing": "historical_noncompliance_acknowledged; accepted_only_as_demo_scaffolding"
+  },
+  "roles_delegated": [
+    {
+      "role": "builder",
+      "workspace_id": "0B41",
+      "app_id": "0003",
+      "acknowledgement_reference": null,
+      "exposure_state": "prior_construction_reported_exact_list_uncollected",
+      "exposure_files": null,
+      "human_independent": false,
+      "scientific_independence_claimed": false
+    },
+    {
+      "role": "h0_author",
+      "workspace_id": "0C33",
+      "app_id": null,
+      "acknowledgement_reference": null,
+      "exposure_state": "uncollected",
+      "exposure_files": null,
+      "human_independent": false,
+      "scientific_independence_claimed": false
+    },
+    {
+      "role": "h0_reviewer",
+      "workspace_id": "0C44",
+      "app_id": null,
+      "acknowledgement_reference": null,
+      "exposure_state": "uncollected",
+      "exposure_files": null,
+      "human_independent": false,
+      "scientific_independence_claimed": false
+    },
+    {
+      "role": "custodian",
+      "workspace_id": "0B42",
+      "app_id": "0004",
+      "acknowledgement_reference": null,
+      "exposure_state": "prior_construction_reported_exact_list_uncollected",
+      "exposure_files": null,
+      "human_independent": false,
+      "scientific_independence_claimed": false
+    },
+    {
+      "role": "labeller",
+      "workspace_id": "0B33",
+      "app_id": "0002",
+      "acknowledgement_reference": null,
+      "exposure_state": "integration_and_plan_exposure_exact_list_uncollected",
+      "exposure_files": null,
+      "human_independent": false,
+      "scientific_independence_claimed": false
+    }
+  ],
+  "rights_and_originality": {
+    "existing_source_rights": "unverified",
+    "external_unknown_rights_copy_allowed": false,
+    "new_demo_data_policy": "original_synthetic_with_author_method_purpose_hash_provenance",
+    "real_study_originality_attested": false
+  },
+  "boundaries": {
+    "design_required": [
+      "worker_control_separation",
+      "model_oracle_separation",
+      "real_custody_and_heldout_access_denied",
+      "single_sanitization_projection"
+    ],
+    "observed_containment": false,
+    "suite_execution_before_p4_receipt": false
+  },
+  "disposition": {
+    "recommended_after_int_adoption": "DEMO_CONSTRUCTION_ACCEPTED_DELEGATED",
+    "construction_scope_accepted": true,
+    "scientific_gate_a": "NO_GO",
+    "gate_b": "UNAVAILABLE",
+    "execution_authorized": false,
+    "attestation_verified": false,
+    "runtime": "unverified",
+    "measured_results": false
+  }
+}

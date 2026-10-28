@@ -28,7 +28,38 @@ def main() -> int:
     admit = commands.add_parser("admit", help="Inspect declarations; never issue GO")
     admit.add_argument("--gate", choices=["A", "B"], required=True)
     admit.add_argument("--packet", type=Path, default=Path("admission.json"))
+    demo_admission = commands.add_parser("demo-admission", help="Inspect delegated source receipt only")
+    demo_admission.add_argument("--packet", type=Path, default=Path("demo-admission.json"))
+    demo = commands.add_parser("demo", help="AUTHORED local transformation; no real-study/live input")
+    demo.add_argument("--fixture", action="store_true", required=True)
+    demo.add_argument("--out", type=Path, required=True)
+    verify = commands.add_parser("verify-report", help="Check AUTHORED local artifact consistency")
+    verify.add_argument("--out", type=Path, required=True)
+    verify.add_argument("--manifest-sha256", help="Externally retained manifest digest, if available")
     args = parser.parse_args()
+    if args.command == "demo-admission":
+        from m19.demo_admission import inspect_demo_admission
+
+        result = inspect_demo_admission(args.packet)
+        print(json.dumps(result, indent=2))
+        return 0 if result["construction_scope_accepted"] else 2
+    if args.command in {"demo", "verify-report"}:
+        try:
+            from m19.demo_report import verify_demo_report, write_demo_report
+
+            if args.command == "demo":
+                from m19.demo_engine import build_demo_scenario
+                from m19.demo_pipeline import prepare_demo_run
+
+                report = write_demo_report(prepare_demo_run(build_demo_scenario()), args.out)
+            else:
+                report = verify_demo_report(args.out, expected_manifest_sha256=args.manifest_sha256)
+            print(json.dumps(report, indent=2))
+            return 0
+        except (OSError, ValueError, UnicodeError, TypeError, KeyError, RecursionError, ImportError) as exc:
+            print(json.dumps({"status": "REFUSED", "reason": str(exc),
+                              "runtime_verified": False, "execution_authorized": False}))
+            return 2
     if args.command == "admit":
         if args.gate == "B":
             result = validate_packet(None, "B")

@@ -1,26 +1,45 @@
-# e2e-repair-flake-study
+# Repair versus a green test strip
 
-M19 foundation: study boundary contracts plus a non-executing positive grammar
-checker, inventory and patch diagnostics. Source-only, runtime unverified.
+M19 is source for a small, keyless walkthrough of benign repair, false repair,
+silencing, intermittent failure and infrastructure failure. Its invented cases
+show why a passing test strip can hide a broken business journey.
 
-Authoritative adopted plan: `../planning/promoted/PLAN-M19-v1.md`. Coordination and transcripts remain outside this product repository.
+**AUTHORED fixtures · runtime unverified · not study results.** No demonstration,
+suite, browser, provider or model has been executed to validate this source.
+Scientific Gate A remains NO_GO; human-independent roles, rights, containment,
+authenticated approval and Gate B remain held.
 
-Python contracts live in `src/m19/contracts`; the read-only CLI offers `m19 status`.
-See [contract seams](docs/CONTRACTS.md). The Node checker lives in
-`node/testlens/src` and uses the TypeScript compiler AST. See its
-[grammar and explicit subset limits](docs/GRAMMAR.md).
+The intended source journey is `demo_engine.build_demo_scenario()` →
+`demo_pipeline.prepare_demo_run()` → `demo_report.write_demo_report()`.
+The report is escaped, self-contained HTML plus JSON and a relative SHA-256
+artifact manifest. It shows fixture outcomes, repair tags, explanations and a
+zero-cost no-live ledger. It makes no measured study claims.
 
-After dependency activation is authorized, install the package locally and run
-`node node/testlens/src/cli.mjs inventory <suite.ts>` or
-`node node/testlens/src/cli.mjs diff <before.ts> <after.ts>`.
-The checker reads source bytes and prints JSON; rejected input exits 2. It does
-not import or run suites. TypeScript 5.9.3 is an exact provisional dependency pin;
-availability and lock resolution have not been verified. No Playwright version
-or image is claimed qualified.
+After separate runtime authorization and environment activation, the intended
+commands are:
 
-This is a partial foundation, not completed P1/P6 or an executable study. No
-containers, held-out variants, H0/P0, independent evaluations or study results
-exist in this package. Human-independent gates remain pending Roy. All metrics
-are **not yet measured**. No installs, tests, live/model calls, spend or publication
-performed. OS containment must be independently qualified before any suite runs;
-an AST check is not a security sandbox. License/release decisions remain pending.
+```text
+m19 status
+m19 demo-admission --packet demo-admission.json
+m19 demo --fixture --out <new-local-directory>
+m19 verify-report --out <report-directory> --manifest-sha256 <externally-retained-digest>
+```
+
+These commands are prospective documentation, not executed examples. The report
+parent directory must already exist; the output directory must not exist. No
+overwrite, deletion, external assets, live input or network path is supported.
+Retain the returned manifest digest separately if later tamper binding matters.
+An unpinned self-contained manifest proves internal consistency only.
+
+`m19 admit --gate A` and `--gate B` retain scientific refusal behavior. The
+separate [delegated demo receipt](docs/DEMO-ADMISSION.md) matches a historical
+source-only adoption under owner order t77u; it is not authentication, a personal
+owner signature, a current revocation check or permission to run anything.
+
+See [walkthrough and report limits](docs/DEMO.md), [contract seams](docs/CONTRACTS.md)
+and [positive grammar subset](docs/GRAMMAR.md). The existing Node AST checker is
+source only; dependency availability and lock resolution are unverified. OS
+containment must be separately qualified before suites run. No dependencies,
+credentials, environments, CI or deployment were activated. USD 0 spent. No
+publication or source-license clearance is implied. Coordination and transcripts
+remain outside this product repository.
