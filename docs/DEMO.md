@@ -90,3 +90,12 @@ The metrics root label is exactly `fixture-derived; not scientific results`.
 D2 declarations use the common D3 helper; this report validates declaration shape
 and renders them as authored, without recomputing measured eligibility/statistics.
 Actual engine/helper/report integration and rendering remain runtime unverified.
+
+Installed producer metadata compatibility: the metrics root may additionally
+declare `runtime_verified: false` and `not_measured: true`, only with these exact
+boolean values. These two root fields are authored metadata, not counters. The
+opposite values, numeric lookalikes, nested copies and other boolean metadata
+reject. Boolean counters, fraction numerators/denominators/values still reject;
+the existing AUTHORED origin, exact label, finite numbers and fraction/null
+rules remain. This source repair was traced against the installed engine and
+shared helper; no function, command, test or report rendering was executed.

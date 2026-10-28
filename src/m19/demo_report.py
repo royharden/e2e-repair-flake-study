@@ -107,7 +107,13 @@ def _validate_metrics(metrics: object) -> None:
         elif not isinstance(value, str) and value is not None:
             raise ValueError("unsupported metric metadata")
 
-    visit(metrics)
+    root_metadata = {"runtime_verified": False, "not_measured": True}
+    for name, expected in root_metadata.items():
+        if name in metrics and metrics[name] is not expected:
+            raise ValueError(f"root metric {name} must be exactly {expected}")
+    # Only these two exact root declarations are metadata, never counters.
+    # Nested/other booleans still reach visit() and are refused.
+    visit({name: value for name, value in metrics.items() if name not in root_metadata})
 
 
 def _flags(value: object) -> dict | None:
