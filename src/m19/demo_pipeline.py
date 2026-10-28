@@ -148,6 +148,26 @@ def _supervise(inventory: list[str], attempts: list[dict], evidence: object) -> 
     }
 
 
+def supervise_demo_run(original_inventory: list[str], attempts: list[dict], evidence: dict | None) -> dict:
+    """Validate one bounded AUTHORED run, then use the shared supervisor core.
+
+    This interprets invented fixture flags only. It performs no actual process,
+    observer, suite or provider work and returns no execution authority.
+    """
+    supplied = {"original_inventory": original_inventory, "attempts": attempts, "evidence": evidence}
+    _bounded(supplied)
+    if len(_canonical(supplied)) > 1048576:
+        raise ValueError("supervisor input exceeds 1 MiB")
+    if type(original_inventory) is not list:
+        raise ValueError("original inventory must be an array")
+    inventory = [_id(test_id) for test_id in original_inventory]
+    if len(set(inventory)) != len(inventory):
+        raise ValueError("duplicate original inventory")
+    if evidence is not None and type(evidence) is not dict:
+        raise ValueError("authored evidence must be an object or null")
+    return _supervise(inventory, _attempts(attempts), evidence)
+
+
 def prepare_demo_run(scenario: dict) -> dict:
     """Validate and project invented fixtures without importing/executing a SUT.
 
@@ -205,8 +225,8 @@ def prepare_demo_run(scenario: dict) -> dict:
         view["text"] = project_fixture_text(fixture_text)
         projected.append(view)
         record = json.loads(_canonical(case))
-        record["before_supervisor"] = _supervise(inventory, before, case.get("before_evidence"))
-        record["supervisor"] = _supervise(inventory, after, case.get("after_evidence"))
+        record["before_supervisor"] = supervise_demo_run(inventory, before, case.get("before_evidence"))
+        record["supervisor"] = supervise_demo_run(inventory, after, case.get("after_evidence"))
         if "repetitions" in case:
             runs = case["repetitions"]
             if type(runs) is not list:
@@ -214,7 +234,7 @@ def prepare_demo_run(scenario: dict) -> dict:
             evidence = case.get("repetition_evidence", [None] * len(runs))
             if type(evidence) is not list or len(evidence) != len(runs):
                 raise ValueError("repetition evidence must align with runs")
-            summaries = [_supervise(inventory, _attempts(run), flags) for run, flags in zip(runs, evidence)]
+            summaries = [supervise_demo_run(inventory, run, flags) for run, flags in zip(runs, evidence)]
             record["repetition_supervisors"] = summaries
             # Repeated IDs across distinct runs are valid. Each run is checked
             # against the original inventory independently; nothing is flattened.

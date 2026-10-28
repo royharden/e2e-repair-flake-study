@@ -6,6 +6,26 @@ It consumes schema version 1, `origin=AUTHORED`, `mode=fixture`, and
 applies patches, invokes providers, resets a SUT or creates containment receipts.
 Scientific Gate A stays NO_GO; execution remains unauthorized.
 
+Contract v1.3 exposes `supervise_demo_run(original_inventory, attempts, evidence)`
+from `m19.demo_pipeline` for producers deriving authored eligibility. Call it once
+per phase/run; do not flatten repetitions. Inputs are a list of unique opaque test
+IDs, an array of `{test_id, outcome}` attempt objects, and a fixture evidence
+dictionary or null. It applies the same JSON/node/string/size bounds as the
+pipeline, validates inventory and attempt structure, and delegates to the single
+existing supervisor core. `prepare_demo_run` uses this public helper for before,
+after and each repeated run. Neither engine nor report is imported.
+
+The return fields are `status`, `green`, `reasons`, `origin`, `runtime_verified`,
+`process_exit`, and `external_evidence`. Status is valid/invalid/infra_error/unknown;
+green is only an internally consistent all-pass authored example. Origin remains
+AUTHORED and runtime_verified remains false. Missing evidence stays unknown;
+explicit measured/runtime-verified evidence is refused. Empty inventory/attempts
+return invalid rather than a successful zero-test result. Malformed structure,
+duplicate declared inventory or unsupported outcomes raise ValueError. Source
+consumers use the returned status/green for eligibility, keeping unknown/invalid/
+infra counters distinct. This wrapper introduces no new eligibility algorithm,
+authority token, I/O, real process observation or scientific evidence.
+
 The provisional producer contract requires `run_id`, `cases`, `metrics`, and a
 ledger explicitly declaring `known_usd=0`, `unknown_liability=0`, and
 `live_dispatch_enabled=false`. Cases carry `id`, `label`, `category`, `requirement`,
