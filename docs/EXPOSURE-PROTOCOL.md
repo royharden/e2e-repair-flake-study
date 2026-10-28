@@ -12,7 +12,7 @@ Before role work, authorized owner reviews appointment, prior exposures and acce
 
 ## Keep projections separate
 
-admission/observer-boundaries.template.json declares intended boundaries for the final DL1 schema/INT join. Its policy_status=DECLARED_ONLY, missing implementation/verification references and PENDING status are intentional; do not convert policy prose into successful containment evidence.
+admission/observer-boundaries.template.json declares intended boundaries for the final DL1 schema/INT join. Its separate design_policy has policy_status=DECLARED_ONLY and null implementation/verification references; the final-shaped observer_boundaries fields remain null/PENDING; do not convert policy prose into successful containment evidence.
 
 Worker receives public SUT UI and allowed suite only, never SUT source, custody, oracle/control files, host credentials or Docker socket. No external/host-gateway access. Only approved output artifacts are written. An actual P4 containment receipt is required before ANY suite, fixtures included; this protocol does not supply it.
 
@@ -27,3 +27,13 @@ Stop affected study use, record the event without spreading restricted content, 
 ## Deferred checks
 
 Actual independence/appointments, complete exposure records, role eligibility and admission refusal paths remain pending. Later authorized owners must qualify every model projection, oracle separation, host receipts and P4 containment before runtime study work. No tests/runtime/network/services/containers/credentials or study datasets were used here. No Roy scope/rights/timing signature is fabricated.
+
+## Mapping to D1 schema at 6798459
+
+Only the fragment's roles or observer_boundaries object is a candidate input to D1's final packet; metadata/constraints/preparer records/design_policy remain outside the packet because unknown top-level packet fields are refused. D1 retains packet/checklist ownership; no packet assembly or inventory refresh is performed here.
+
+Each role now uses actor_id, appointment_reference, exposure and independence_confirmed. Every value is null: unappointed identities, unknown historical exposure and unverified independence are not fabricated. Unknown exposure MUST NOT become [] (which asserts no files opened); null independence MUST NOT become true. Actual canonical actor/session identity is needed, with builder distinct from custodian/H0 author and H0 reviewer distinct from H0 author. The partial preparer list cannot populate an appointed role's exposure automatically.
+
+Observer declaration fields are worker_no_control_access, model_no_oracle_access, builder_no_heldout_access, custody_outside_repo and reference. All remain null because no actual declaration/reference is supplied. Intended boundaries live separately in design_policy; do not turn design intent into true assertions or claim live containment. The schema's reference is the authentic boundary design declaration reference, not a substitute runtime containment receipt.
+
+These null fragments deliberately fail admission. Even a later structurally valid complete declaration packet returns PENDING_ATTESTATION_VERIFICATION, never GO; packet_valid does not imply attestation_verified or execution_authorized. Actual external receipt/exposure/rights verification and a qualified GO transition remain unfinished. scope_approval and ordering_disposition require genuine personally recorded Roy decisions; no builder populates them. Ordering disposition acknowledges earlier P6 source and cannot retroactively meet pre-code timing. Null rights never imply permission. D1/INT must reconcile the final packet and later exercise schema/validator behavior after Dirty closure/authorization.
