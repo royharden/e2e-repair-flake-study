@@ -4,7 +4,7 @@ M19 is source-only construction, runtime unverified. This P1 slice supplies no s
 
 ## Rights and originality
 
-The plan intends an original Harbour Bookings SUT, invented seed data and an independently controlled corpus. Those are planned sources, not declarations of existing artifacts or verified rights. The template leaves declarants, evidence references and release license null/PENDING. MIT is proposed only; Roy must decide the release license. No license commitment is made here.
+The plan intends an original Harbour Bookings SUT, invented seed data and an independently controlled corpus. Those are planned sources, not declarations of existing artifacts or verified rights. The reconciled template and packet leave originality declarants/references and every per-source rights permission/basis/reference/declared_by null. Release licensing remains PENDING; MIT is proposed only and Roy must decide it. No license commitment is made here.
 
 SOURCE-INVENTORY.md hashes the observed baseline source. Hashes prove content identity only; Git possession and agent construction do not prove rights or independent authorship. Before reuse, the responsible owner must inspect actual licenses/notices for dependencies, browser/images and any future S2/S3 vendoring and record pinned source/permitted use. The plan's prior-art descriptions are reading references only, never permission to copy text, code or benchmark rows. No external acquisition occurred in this slice.
 
@@ -26,10 +26,20 @@ AUTHORED and RECORDED fixtures, if later authorized, must carry fixture flags an
 
 Builder work is distinct from H0 authorship/review and custodian work. Record genuine appointments and actual files opened; another callsign alone is not independence. H0 freezes before variants exist. Custodian owns P0, oracle/expected values and held-out truth; the labeller resolves disputes without arm results. Genuine study-role appointments remain PENDING - needs Roy.
 
-DL1 owns admission schema/validator interpretation; INT reconciles the packet. This fragment supplies rights/originality/source-inventory inputs only. Roles/exposure, split policy with numeric floors, observer boundaries and personally recorded scope_approval must come from authorized owners. An agent may not populate Roy's approval on his behalf. Nonempty JSON, null/PENDING objects, this document or a static parse never mean GO.
+DL1 owns admission schema/validator interpretation; D2 owns the explicitly granted inventory/packet reconciliation and INT owns integration. The packet receives source_inventory plus authentic-evidence placeholders only. Roles/exposure, split policy with numeric floors, observer boundaries and personally recorded scope_approval must come from authorized owners. An agent may not populate Roy's approval on his behalf. Nonempty JSON, null/PENDING objects, this document or a static parse never mean GO.
 
 Prior P6 source predates Gate A: pre-code timing cannot be met retrospectively. Roy must resolve applicability. These files authorize no P2+ work or study execution. Even fixture suites require the later actual P4 containment receipt.
 
 ## Deferred validation
 
 After Dirty Mode closure and separate authorization: reconcile with DL1 schema; verify actual rights/originality/license receipts; refresh integrated-revision inventory; exercise admission acceptance/refusals and provenance joins; obtain genuine roles/exposure and scope/order disposition; qualify dependencies/containment before suites. None ran here. Gate B, held-out custody and measured campaigns remain pending. No keys, provider calls, spend, push or publication are part of this slice.
+
+## Pinned assembled snapshot reconciliation
+
+The inventory now identifies exactly 24 included material paths at commit d04e524802f6054c40a9b521d7c99a55688eb7c8, with all included paths and three recursive inventory-bearing exclusions enumerated in SOURCE-INVENTORY.md and the template snapshot metadata. Packet/template source rows share stable IDs, commit:path references and exact Git-blob SHA256 provenance. IDs source-001..011 stay attached to their original paths; additional paths are assigned deterministically.
+
+This document's own inventory row refers to its bytes at that historical snapshot, before this edit. It does not hash the new document or claim the new candidate's every byte is attested. Packet, template and inventory Markdown exclude themselves. No source tree outside the finite known-path contract was opened; zero-byte provenance ledger remains unchanged, no study data acquired/authored.
+
+All rights rows retain null permission and missing actual receipts. Integrated role/observer fragments map into the final packet with null authority/exposure declarations; partial preparer records/design policy remain separate. Existing numeric split commitments are preserved without asserting measured counts. Roy scope_approval and ordering_disposition remain null-valued receipt objects. Unknown exposure is null, never an empty assertion. No rights, appointments, independence, approval or containment proof is inferred from content identity.
+
+This deliberately incomplete packet must be refused; even future structurally valid declarations remain PENDING_ATTESTATION_VERIFICATION, never GO. Missing authentic receipts, external eligibility verification, qualified authenticated GO transition and later runtime admission/provenance joins remain deferred required work after authorization. No validator/CLI or application was executed here.
