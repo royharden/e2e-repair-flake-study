@@ -1,28 +1,53 @@
-# Source inventory
+# Assembled source snapshot inventory
 
-This inventories observed local source, not rights, authorship or study data.
-Snapshot commit: abbbae81e6401ec45a514762018dfb4b0967ae9c. SHA256 covers exact Git blob bytes at that commit, before checkout line-ending conversion. Reproduce with git show COMMIT:PATH captured as bytes and hashed with SHA256; PowerShell-decoded text is not equivalent.
+Pinned assembled commit: d04e524802f6054c40a9b521d7c99a55688eb7c8. This records 24 explicitly included material files at that historical snapshot. SHA256 values cover exact Git blob bytes, before checkout line-ending conversion. This is content identification, not rights, authorship, independent evidence, data admission or an attestation of the new candidate tree.
 
-Coverage: all 11 tracked baseline files. Newly authored P1 documents/template/ledger and future merged files are outside this historical snapshot. Regenerate a new explicitly pinned inventory for the integrated revision.
+## Coverage contract
 
-| Baseline path | SHA256 of Git blob |
-|---|---|
-| .gitignore | be9b49a0747d97ac9e6902ffed2a16a89c1c2a25615812d61c8f3a2da892d1dc |
-| README.md | 3d43efe7db53cc6b7a2aa8c976243362ebfc65769f3981b8cadbef04565fa926 |
-| docs/CONTRACTS.md | 9fe25c12004baa9b787479310edcf909f9e49ff313e55d1e309ff30ed3c00789 |
-| docs/GRAMMAR.md | 481826391c65063cafc06d0e5c471bbd475e74e122d6e24e331133e0c8865e39 |
-| node/testlens/package.json | b97e5fdac19463ad157a26b4d1e9d8263fdda0a783417aac0db88cca54e5361d |
-| node/testlens/src/cli.mjs | c90d7bd5e631d397f4841405eeba5c8c5f0011b8cf81f5087f9e85fa39eb351e |
-| node/testlens/src/index.mjs | 26316888fefd751c912784de2edac807b2127b889bf321027542c931d7c917df |
-| pyproject.toml | 89943105e374dadf7cddb0cb61bb470db9f97aa696814ee02df3547ab65018f5 |
-| src/m19/__init__.py | b71535dbbba6f8a6b35e0171426ac076ce6603008674ab6d951fb6c8ed3769fc |
-| src/m19/cli.py | 926e33937097b9dc34e84699ae730f7e9e29f63e5abdc18b8a686fa54edf757f |
-| src/m19/contracts/__init__.py | 9f61a58453f5cc0ce715890347099260f68b7e469c3ffde1bf37e8a8dbb3ffce |
+Every tracked path at the pinned snapshot is either included below or explicitly excluded:
+- admission.json: inventory-bearing packet, excluded to avoid recursive self-hash coverage.
+- admission/source-inventory.template.json: inventory metadata/hashes, excluded for the same reason.
+- docs/SOURCE-INVENTORY.md: inventory table/coverage contract, excluded for the same reason.
 
-Authorship, method and rights receipts for every row are unknown/PENDING. Git possession and content hashes do not establish ownership or release approval. No foreign source was copied or acquired by this slice. License descriptions in the plan remain planning references here: inspect actual dependency licenses/notices before reuse. TypeScript 5.9.3 is only a provisional manifest pin, not a resolved dependency/license receipt. No S2/S3 code was vendored.
+No private OUTER files, custody, transcripts, secrets, dependencies outside Git or later/untracked files are included or inspected. This finite contract is not a license to discover more files. The empty data-provenance.jsonl is included only as observed ledger source; it supplies no study dataset.
 
-The JSON at admission/source-inventory.template.json is a provisional input fragment for DL1, which owns executable schema interpretation; INT reconciles the final packet. Its schema_version describes this fragment only. It does not replace admission.json or create an executable admission authority. PENDING declarations must not pass Gate A.
+All included rows reference the pinned commit, not working-copy bytes. In particular docs/DATA.md is changed by this reconciliation: its row identifies the pre-change bytes at the pinned commit, not the new document. The three other changed inventory-bearing files are excluded. Thus no row purports to self-hash this new commit. Future material source changes need an explicitly pinned later inventory revision; do not describe this snapshot as covering every byte of a future integration.
 
-This is source/configuration/documentation, not SUT data, H0/P0, variants, labels, oracle, seeds or measured evidence. The empty data-provenance.jsonl records no study data because this slice authored/acquired none; it does not attest the entire workspace is data-free or establish admission.
+## Included paths and exact Git-blob SHA256
 
-Gate A remains NO-GO. Prior P6 source predates Gate A and cannot retroactively satisfy pre-code timing. Actual independent appointments, rights/originality receipts, Roy scope approval and ordering applicability remain pending. No runtime or scientific-independence evidence is supplied.
+| Stable id | Path at pinned commit | SHA256 |
+|---|---|---|
+| source-001 | .gitignore | 3a24c79c71989f2ac80eae70a95066f7086f33aa314f5bbb568c5c33d0bc4ca2 |
+| source-002 | README.md | 3d43efe7db53cc6b7a2aa8c976243362ebfc65769f3981b8cadbef04565fa926 |
+| source-003 | docs/CONTRACTS.md | 9fe25c12004baa9b787479310edcf909f9e49ff313e55d1e309ff30ed3c00789 |
+| source-004 | docs/GRAMMAR.md | 481826391c65063cafc06d0e5c471bbd475e74e122d6e24e331133e0c8865e39 |
+| source-005 | node/testlens/package.json | b97e5fdac19463ad157a26b4d1e9d8263fdda0a783417aac0db88cca54e5361d |
+| source-006 | node/testlens/src/cli.mjs | c90d7bd5e631d397f4841405eeba5c8c5f0011b8cf81f5087f9e85fa39eb351e |
+| source-007 | node/testlens/src/index.mjs | 26316888fefd751c912784de2edac807b2127b889bf321027542c931d7c917df |
+| source-008 | pyproject.toml | 89943105e374dadf7cddb0cb61bb470db9f97aa696814ee02df3547ab65018f5 |
+| source-009 | src/m19/__init__.py | b71535dbbba6f8a6b35e0171426ac076ce6603008674ab6d951fb6c8ed3769fc |
+| source-010 | src/m19/cli.py | 22863d5ccfe35b1816667c17661f2be6320fa62d5af0a845d96e62251474111a |
+| source-011 | src/m19/contracts/__init__.py | 9f61a58453f5cc0ce715890347099260f68b7e469c3ffde1bf37e8a8dbb3ffce |
+| source-012 | admission/observer-boundaries.template.json | 9cc358c02138f70813c5d2e4c7b7d2c6bf6e7a535ee949b3d748c1184b82236f |
+| source-013 | admission/roles.template.json | 2f444e6d544735d02fa125b4ecbdcaef4803c828037d3267bea2be9ec017aded |
+| source-014 | admission/split-policy.template.json | b59741e38716859e8608e1d9520349ea769ad2499c914cc33994051d0a54af54 |
+| source-015 | data-provenance.jsonl | e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 |
+| source-016 | docs/ACTIVATION.md | 74936ebb9c54e6a7e3a730e8beae24b81fe6699d922e5f09302fb9838eebdb6b |
+| source-017 | docs/ADMISSION.md | 29a8f52f32989c6cc5458b1e1c394b0884d22716baad35a91455e1541dc1d0a3 |
+| source-018 | docs/DATA.md | 1e4819694c879b53c549bea4aeaf18344e6bdaa23a027f3cbc2ee38277b28d3a |
+| source-019 | docs/EMPTY-REPORT-STATES.md | 00a220645d80dd163772c1d37782d20049482fa68ce7d240092dc9fdb5d239e3 |
+| source-020 | docs/EXPOSURE-PROTOCOL.md | d904eb9c3633b365c3124bb21c7ffcc1b1bed9377366b4dff10d51281d6688cd |
+| source-021 | docs/GATE-CHECKLIST.md | 48e9e785bffc1820588a9f30a448b1891c8d585950a8b2fdc05ef20a282398d3 |
+| source-022 | docs/STUDY-ROLES.md | 9334615d77b01357464243ffb15fad717da1332cfad442d59492255aa857939b |
+| source-023 | schemas/admission.schema.json | 37b753ab5467286d481874725c8e079e3f16d7fabbd59788a4895de08b780b56 |
+| source-024 | src/m19/admission/__init__.py | f6c47c5bedbd0545b8bb5dfd2f2270a9ef004945eac8cd0b2607522f717e261d |
+
+admission/source-inventory.template.json supplies structured snapshot metadata and source_observations; its source_inventory array exactly matches admission.json with D1 id/reference/purpose/provenance fields. SHA256 appears both in each row's provenance and in structured observations. Metadata is not copied into the packet's top level. Preserve source-001..011 by their original paths even if file bytes change; new included paths receive source-012 onward in lexicographic path order. IDs identify paths in this administrative inventory, not rights or study corpus identity.
+
+Reproduce one content digest by capturing git show COMMIT:PATH as raw bytes and hashing with SHA256; decoded/re-encoded PowerShell text is not equivalent. Git hashes/provenance prove only observed content identity. Author, acquisition method and rights receipts remain unknown; no external source was acquired, no license commitment made, and no per-source permission asserted.
+
+Each source has one matching rights_declarations row with permitted/basis/reference/declared_by null. Git possession, summary PENDING, plan license descriptions and hashes are not authentic per-source rights receipts. Originality remains all null. Actual licenses/notices for dependencies, browser/images and any future vendoring require separate verified evidence.
+
+Role and boundary objects are copied from the integrated D1-shaped fragments, preserving all null identities/appointment/exposure/independence and boundary declaration/reference fields. Partial preparer metadata and design_policy stay outside admission evidence. Numeric split floors remain policy commitments, not measured corpus counts. scope_approval and ordering_disposition remain all-null receipts, never agent-authored approvals.
+
+Gate A remains NO-GO: the deliberately incomplete packet requires refusal. Even structurally complete declarations only reach PENDING_ATTESTATION_VERIFICATION, not GO or execution authority. Prior P6 predates Gate A; no retrospective timing compliance is claimed. Authentic evidence verification and a qualified admission transition remain unfinished required work. No validator/runtime was executed for this snapshot; static consistency is not a runtime join or study admission.

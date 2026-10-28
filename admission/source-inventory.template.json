@@ -1,171 +1,618 @@
 {
-  "schema_version": "m19-source-inventory-draft-v1",
+  "schema_version": "m19-source-inventory-fragment-v2",
   "status": "PENDING",
   "gate_a": "NO-GO",
   "snapshot": {
-    "commit": "abbbae81e6401ec45a514762018dfb4b0967ae9c",
-    "hash_basis": "exact Git blob bytes at snapshot commit",
-    "coverage": "all 11 tracked baseline files; excludes newly authored P1 files and later integrations"
-  },
-  "rights_declarations": {
-    "status": "PENDING",
-    "declarant": null,
-    "reference": null,
-    "release_license": null
-  },
-  "originality": {
-    "status": "PENDING",
-    "declarant": null,
-    "reference": null
+    "commit": "d04e524802f6054c40a9b521d7c99a55688eb7c8",
+    "hash_basis": "SHA256 of exact Git blob bytes at the pinned commit; not checkout bytes",
+    "included_paths": [
+      ".gitignore",
+      "README.md",
+      "admission/observer-boundaries.template.json",
+      "admission/roles.template.json",
+      "admission/split-policy.template.json",
+      "data-provenance.jsonl",
+      "docs/ACTIVATION.md",
+      "docs/ADMISSION.md",
+      "docs/CONTRACTS.md",
+      "docs/DATA.md",
+      "docs/EMPTY-REPORT-STATES.md",
+      "docs/EXPOSURE-PROTOCOL.md",
+      "docs/GATE-CHECKLIST.md",
+      "docs/GRAMMAR.md",
+      "docs/STUDY-ROLES.md",
+      "node/testlens/package.json",
+      "node/testlens/src/cli.mjs",
+      "node/testlens/src/index.mjs",
+      "pyproject.toml",
+      "schemas/admission.schema.json",
+      "src/m19/__init__.py",
+      "src/m19/admission/__init__.py",
+      "src/m19/cli.py",
+      "src/m19/contracts/__init__.py"
+    ],
+    "excluded_paths": {
+      "admission.json": "Packet bears the inventory; excluded to avoid recursive self-coverage.",
+      "admission/source-inventory.template.json": "Inventory metadata and hashes; excluded to avoid recursive self-coverage.",
+      "docs/SOURCE-INVENTORY.md": "Inventory table and coverage contract; excluded to avoid recursive self-coverage."
+    },
+    "scope": "24 explicitly included material files at the assembled snapshot; not an attestation of the new candidate tree",
+    "later_changes": "docs/DATA.md is inventoried as historical bytes at the pinned snapshot, not its changed bytes in this reconciliation. The other changed inventory-bearing artifacts are excluded."
   },
   "source_inventory": [
     {
+      "id": "source-001",
+      "reference": "git:d04e524802f6054c40a9b521d7c99a55688eb7c8:.gitignore",
+      "purpose": "construction_reference_only",
+      "provenance": "existing_local_committed_source; exact Git blob SHA256 3a24c79c71989f2ac80eae70a95066f7086f33aa314f5bbb568c5c33d0bc4ca2; pinned assembled snapshot, explicit exclusions documented"
+    },
+    {
+      "id": "source-002",
+      "reference": "git:d04e524802f6054c40a9b521d7c99a55688eb7c8:README.md",
+      "purpose": "construction_reference_only",
+      "provenance": "existing_local_committed_source; exact Git blob SHA256 3d43efe7db53cc6b7a2aa8c976243362ebfc65769f3981b8cadbef04565fa926; pinned assembled snapshot, explicit exclusions documented"
+    },
+    {
+      "id": "source-003",
+      "reference": "git:d04e524802f6054c40a9b521d7c99a55688eb7c8:docs/CONTRACTS.md",
+      "purpose": "construction_reference_only",
+      "provenance": "existing_local_committed_source; exact Git blob SHA256 9fe25c12004baa9b787479310edcf909f9e49ff313e55d1e309ff30ed3c00789; pinned assembled snapshot, explicit exclusions documented"
+    },
+    {
+      "id": "source-004",
+      "reference": "git:d04e524802f6054c40a9b521d7c99a55688eb7c8:docs/GRAMMAR.md",
+      "purpose": "construction_reference_only",
+      "provenance": "existing_local_committed_source; exact Git blob SHA256 481826391c65063cafc06d0e5c471bbd475e74e122d6e24e331133e0c8865e39; pinned assembled snapshot, explicit exclusions documented"
+    },
+    {
+      "id": "source-005",
+      "reference": "git:d04e524802f6054c40a9b521d7c99a55688eb7c8:node/testlens/package.json",
+      "purpose": "construction_reference_only",
+      "provenance": "existing_local_committed_source; exact Git blob SHA256 b97e5fdac19463ad157a26b4d1e9d8263fdda0a783417aac0db88cca54e5361d; pinned assembled snapshot, explicit exclusions documented"
+    },
+    {
+      "id": "source-006",
+      "reference": "git:d04e524802f6054c40a9b521d7c99a55688eb7c8:node/testlens/src/cli.mjs",
+      "purpose": "construction_reference_only",
+      "provenance": "existing_local_committed_source; exact Git blob SHA256 c90d7bd5e631d397f4841405eeba5c8c5f0011b8cf81f5087f9e85fa39eb351e; pinned assembled snapshot, explicit exclusions documented"
+    },
+    {
+      "id": "source-007",
+      "reference": "git:d04e524802f6054c40a9b521d7c99a55688eb7c8:node/testlens/src/index.mjs",
+      "purpose": "construction_reference_only",
+      "provenance": "existing_local_committed_source; exact Git blob SHA256 26316888fefd751c912784de2edac807b2127b889bf321027542c931d7c917df; pinned assembled snapshot, explicit exclusions documented"
+    },
+    {
+      "id": "source-008",
+      "reference": "git:d04e524802f6054c40a9b521d7c99a55688eb7c8:pyproject.toml",
+      "purpose": "construction_reference_only",
+      "provenance": "existing_local_committed_source; exact Git blob SHA256 89943105e374dadf7cddb0cb61bb470db9f97aa696814ee02df3547ab65018f5; pinned assembled snapshot, explicit exclusions documented"
+    },
+    {
+      "id": "source-009",
+      "reference": "git:d04e524802f6054c40a9b521d7c99a55688eb7c8:src/m19/__init__.py",
+      "purpose": "construction_reference_only",
+      "provenance": "existing_local_committed_source; exact Git blob SHA256 b71535dbbba6f8a6b35e0171426ac076ce6603008674ab6d951fb6c8ed3769fc; pinned assembled snapshot, explicit exclusions documented"
+    },
+    {
+      "id": "source-010",
+      "reference": "git:d04e524802f6054c40a9b521d7c99a55688eb7c8:src/m19/cli.py",
+      "purpose": "construction_reference_only",
+      "provenance": "existing_local_committed_source; exact Git blob SHA256 22863d5ccfe35b1816667c17661f2be6320fa62d5af0a845d96e62251474111a; pinned assembled snapshot, explicit exclusions documented"
+    },
+    {
+      "id": "source-011",
+      "reference": "git:d04e524802f6054c40a9b521d7c99a55688eb7c8:src/m19/contracts/__init__.py",
+      "purpose": "construction_reference_only",
+      "provenance": "existing_local_committed_source; exact Git blob SHA256 9f61a58453f5cc0ce715890347099260f68b7e469c3ffde1bf37e8a8dbb3ffce; pinned assembled snapshot, explicit exclusions documented"
+    },
+    {
+      "id": "source-012",
+      "reference": "git:d04e524802f6054c40a9b521d7c99a55688eb7c8:admission/observer-boundaries.template.json",
+      "purpose": "construction_reference_only",
+      "provenance": "existing_local_committed_source; exact Git blob SHA256 9cc358c02138f70813c5d2e4c7b7d2c6bf6e7a535ee949b3d748c1184b82236f; pinned assembled snapshot, explicit exclusions documented"
+    },
+    {
+      "id": "source-013",
+      "reference": "git:d04e524802f6054c40a9b521d7c99a55688eb7c8:admission/roles.template.json",
+      "purpose": "construction_reference_only",
+      "provenance": "existing_local_committed_source; exact Git blob SHA256 2f444e6d544735d02fa125b4ecbdcaef4803c828037d3267bea2be9ec017aded; pinned assembled snapshot, explicit exclusions documented"
+    },
+    {
+      "id": "source-014",
+      "reference": "git:d04e524802f6054c40a9b521d7c99a55688eb7c8:admission/split-policy.template.json",
+      "purpose": "construction_reference_only",
+      "provenance": "existing_local_committed_source; exact Git blob SHA256 b59741e38716859e8608e1d9520349ea769ad2499c914cc33994051d0a54af54; pinned assembled snapshot, explicit exclusions documented"
+    },
+    {
+      "id": "source-015",
+      "reference": "git:d04e524802f6054c40a9b521d7c99a55688eb7c8:data-provenance.jsonl",
+      "purpose": "construction_reference_only",
+      "provenance": "existing_local_committed_source; exact Git blob SHA256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855; pinned assembled snapshot, explicit exclusions documented"
+    },
+    {
+      "id": "source-016",
+      "reference": "git:d04e524802f6054c40a9b521d7c99a55688eb7c8:docs/ACTIVATION.md",
+      "purpose": "construction_reference_only",
+      "provenance": "existing_local_committed_source; exact Git blob SHA256 74936ebb9c54e6a7e3a730e8beae24b81fe6699d922e5f09302fb9838eebdb6b; pinned assembled snapshot, explicit exclusions documented"
+    },
+    {
+      "id": "source-017",
+      "reference": "git:d04e524802f6054c40a9b521d7c99a55688eb7c8:docs/ADMISSION.md",
+      "purpose": "construction_reference_only",
+      "provenance": "existing_local_committed_source; exact Git blob SHA256 29a8f52f32989c6cc5458b1e1c394b0884d22716baad35a91455e1541dc1d0a3; pinned assembled snapshot, explicit exclusions documented"
+    },
+    {
+      "id": "source-018",
+      "reference": "git:d04e524802f6054c40a9b521d7c99a55688eb7c8:docs/DATA.md",
+      "purpose": "construction_reference_only",
+      "provenance": "existing_local_committed_source; exact Git blob SHA256 1e4819694c879b53c549bea4aeaf18344e6bdaa23a027f3cbc2ee38277b28d3a; pinned assembled snapshot, explicit exclusions documented"
+    },
+    {
+      "id": "source-019",
+      "reference": "git:d04e524802f6054c40a9b521d7c99a55688eb7c8:docs/EMPTY-REPORT-STATES.md",
+      "purpose": "construction_reference_only",
+      "provenance": "existing_local_committed_source; exact Git blob SHA256 00a220645d80dd163772c1d37782d20049482fa68ce7d240092dc9fdb5d239e3; pinned assembled snapshot, explicit exclusions documented"
+    },
+    {
+      "id": "source-020",
+      "reference": "git:d04e524802f6054c40a9b521d7c99a55688eb7c8:docs/EXPOSURE-PROTOCOL.md",
+      "purpose": "construction_reference_only",
+      "provenance": "existing_local_committed_source; exact Git blob SHA256 d904eb9c3633b365c3124bb21c7ffcc1b1bed9377366b4dff10d51281d6688cd; pinned assembled snapshot, explicit exclusions documented"
+    },
+    {
+      "id": "source-021",
+      "reference": "git:d04e524802f6054c40a9b521d7c99a55688eb7c8:docs/GATE-CHECKLIST.md",
+      "purpose": "construction_reference_only",
+      "provenance": "existing_local_committed_source; exact Git blob SHA256 48e9e785bffc1820588a9f30a448b1891c8d585950a8b2fdc05ef20a282398d3; pinned assembled snapshot, explicit exclusions documented"
+    },
+    {
+      "id": "source-022",
+      "reference": "git:d04e524802f6054c40a9b521d7c99a55688eb7c8:docs/STUDY-ROLES.md",
+      "purpose": "construction_reference_only",
+      "provenance": "existing_local_committed_source; exact Git blob SHA256 9334615d77b01357464243ffb15fad717da1332cfad442d59492255aa857939b; pinned assembled snapshot, explicit exclusions documented"
+    },
+    {
+      "id": "source-023",
+      "reference": "git:d04e524802f6054c40a9b521d7c99a55688eb7c8:schemas/admission.schema.json",
+      "purpose": "construction_reference_only",
+      "provenance": "existing_local_committed_source; exact Git blob SHA256 37b753ab5467286d481874725c8e079e3f16d7fabbd59788a4895de08b780b56; pinned assembled snapshot, explicit exclusions documented"
+    },
+    {
+      "id": "source-024",
+      "reference": "git:d04e524802f6054c40a9b521d7c99a55688eb7c8:src/m19/admission/__init__.py",
+      "purpose": "construction_reference_only",
+      "provenance": "existing_local_committed_source; exact Git blob SHA256 f6c47c5bedbd0545b8bb5dfd2f2270a9ef004945eac8cd0b2607522f717e261d; pinned assembled snapshot, explicit exclusions documented"
+    }
+  ],
+  "source_observations": [
+    {
+      "id": "source-001",
       "path": ".gitignore",
-      "sha256": "be9b49a0747d97ac9e6902ffed2a16a89c1c2a25615812d61c8f3a2da892d1dc",
-      "kind": "source_or_configuration_or_documentation",
-      "origin": "existing_local_committed_source",
+      "sha256": "3a24c79c71989f2ac80eae70a95066f7086f33aa314f5bbb568c5c33d0bc4ca2",
+      "byte_count": 162,
       "author": null,
       "method": null,
-      "intended_use": "construction_reference_only",
       "rights_status": "PENDING",
-      "rights_reference": null,
       "study_data": false
     },
     {
+      "id": "source-002",
       "path": "README.md",
       "sha256": "3d43efe7db53cc6b7a2aa8c976243362ebfc65769f3981b8cadbef04565fa926",
-      "kind": "source_or_configuration_or_documentation",
-      "origin": "existing_local_committed_source",
+      "byte_count": 1547,
       "author": null,
       "method": null,
-      "intended_use": "construction_reference_only",
       "rights_status": "PENDING",
-      "rights_reference": null,
       "study_data": false
     },
     {
+      "id": "source-003",
       "path": "docs/CONTRACTS.md",
       "sha256": "9fe25c12004baa9b787479310edcf909f9e49ff313e55d1e309ff30ed3c00789",
-      "kind": "source_or_configuration_or_documentation",
-      "origin": "existing_local_committed_source",
+      "byte_count": 2194,
       "author": null,
       "method": null,
-      "intended_use": "construction_reference_only",
       "rights_status": "PENDING",
-      "rights_reference": null,
       "study_data": false
     },
     {
+      "id": "source-004",
       "path": "docs/GRAMMAR.md",
       "sha256": "481826391c65063cafc06d0e5c471bbd475e74e122d6e24e331133e0c8865e39",
-      "kind": "source_or_configuration_or_documentation",
-      "origin": "existing_local_committed_source",
+      "byte_count": 4866,
       "author": null,
       "method": null,
-      "intended_use": "construction_reference_only",
       "rights_status": "PENDING",
-      "rights_reference": null,
       "study_data": false
     },
     {
+      "id": "source-005",
       "path": "node/testlens/package.json",
       "sha256": "b97e5fdac19463ad157a26b4d1e9d8263fdda0a783417aac0db88cca54e5361d",
-      "kind": "source_or_configuration_or_documentation",
-      "origin": "existing_local_committed_source",
+      "byte_count": 251,
       "author": null,
       "method": null,
-      "intended_use": "construction_reference_only",
       "rights_status": "PENDING",
-      "rights_reference": null,
       "study_data": false
     },
     {
+      "id": "source-006",
       "path": "node/testlens/src/cli.mjs",
       "sha256": "c90d7bd5e631d397f4841405eeba5c8c5f0011b8cf81f5087f9e85fa39eb351e",
-      "kind": "source_or_configuration_or_documentation",
-      "origin": "existing_local_committed_source",
+      "byte_count": 760,
       "author": null,
       "method": null,
-      "intended_use": "construction_reference_only",
       "rights_status": "PENDING",
-      "rights_reference": null,
       "study_data": false
     },
     {
+      "id": "source-007",
       "path": "node/testlens/src/index.mjs",
       "sha256": "26316888fefd751c912784de2edac807b2127b889bf321027542c931d7c917df",
-      "kind": "source_or_configuration_or_documentation",
-      "origin": "existing_local_committed_source",
+      "byte_count": 17098,
       "author": null,
       "method": null,
-      "intended_use": "construction_reference_only",
       "rights_status": "PENDING",
-      "rights_reference": null,
       "study_data": false
     },
     {
+      "id": "source-008",
       "path": "pyproject.toml",
       "sha256": "89943105e374dadf7cddb0cb61bb470db9f97aa696814ee02df3547ab65018f5",
-      "kind": "source_or_configuration_or_documentation",
-      "origin": "existing_local_committed_source",
+      "byte_count": 356,
       "author": null,
       "method": null,
-      "intended_use": "construction_reference_only",
       "rights_status": "PENDING",
-      "rights_reference": null,
       "study_data": false
     },
     {
+      "id": "source-009",
       "path": "src/m19/__init__.py",
       "sha256": "b71535dbbba6f8a6b35e0171426ac076ce6603008674ab6d951fb6c8ed3769fc",
-      "kind": "source_or_configuration_or_documentation",
-      "origin": "existing_local_committed_source",
+      "byte_count": 82,
       "author": null,
       "method": null,
-      "intended_use": "construction_reference_only",
       "rights_status": "PENDING",
-      "rights_reference": null,
       "study_data": false
     },
     {
+      "id": "source-010",
       "path": "src/m19/cli.py",
-      "sha256": "926e33937097b9dc34e84699ae730f7e9e29f63e5abdc18b8a686fa54edf757f",
-      "kind": "source_or_configuration_or_documentation",
-      "origin": "existing_local_committed_source",
+      "sha256": "22863d5ccfe35b1816667c17661f2be6320fa62d5af0a845d96e62251474111a",
+      "byte_count": 2119,
       "author": null,
       "method": null,
-      "intended_use": "construction_reference_only",
       "rights_status": "PENDING",
-      "rights_reference": null,
       "study_data": false
     },
     {
+      "id": "source-011",
       "path": "src/m19/contracts/__init__.py",
       "sha256": "9f61a58453f5cc0ce715890347099260f68b7e469c3ffde1bf37e8a8dbb3ffce",
-      "kind": "source_or_configuration_or_documentation",
-      "origin": "existing_local_committed_source",
+      "byte_count": 6379,
       "author": null,
       "method": null,
-      "intended_use": "construction_reference_only",
       "rights_status": "PENDING",
-      "rights_reference": null,
+      "study_data": false
+    },
+    {
+      "id": "source-012",
+      "path": "admission/observer-boundaries.template.json",
+      "sha256": "9cc358c02138f70813c5d2e4c7b7d2c6bf6e7a535ee949b3d748c1184b82236f",
+      "byte_count": 3210,
+      "author": null,
+      "method": null,
+      "rights_status": "PENDING",
+      "study_data": false
+    },
+    {
+      "id": "source-013",
+      "path": "admission/roles.template.json",
+      "sha256": "2f444e6d544735d02fa125b4ecbdcaef4803c828037d3267bea2be9ec017aded",
+      "byte_count": 3162,
+      "author": null,
+      "method": null,
+      "rights_status": "PENDING",
+      "study_data": false
+    },
+    {
+      "id": "source-014",
+      "path": "admission/split-policy.template.json",
+      "sha256": "b59741e38716859e8608e1d9520349ea769ad2499c914cc33994051d0a54af54",
+      "byte_count": 240,
+      "author": null,
+      "method": null,
+      "rights_status": "PENDING",
+      "study_data": false
+    },
+    {
+      "id": "source-015",
+      "path": "data-provenance.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "byte_count": 0,
+      "author": null,
+      "method": null,
+      "rights_status": "PENDING",
+      "study_data": false
+    },
+    {
+      "id": "source-016",
+      "path": "docs/ACTIVATION.md",
+      "sha256": "74936ebb9c54e6a7e3a730e8beae24b81fe6699d922e5f09302fb9838eebdb6b",
+      "byte_count": 4641,
+      "author": null,
+      "method": null,
+      "rights_status": "PENDING",
+      "study_data": false
+    },
+    {
+      "id": "source-017",
+      "path": "docs/ADMISSION.md",
+      "sha256": "29a8f52f32989c6cc5458b1e1c394b0884d22716baad35a91455e1541dc1d0a3",
+      "byte_count": 5960,
+      "author": null,
+      "method": null,
+      "rights_status": "PENDING",
+      "study_data": false
+    },
+    {
+      "id": "source-018",
+      "path": "docs/DATA.md",
+      "sha256": "1e4819694c879b53c549bea4aeaf18344e6bdaa23a027f3cbc2ee38277b28d3a",
+      "byte_count": 4738,
+      "author": null,
+      "method": null,
+      "rights_status": "PENDING",
+      "study_data": false
+    },
+    {
+      "id": "source-019",
+      "path": "docs/EMPTY-REPORT-STATES.md",
+      "sha256": "00a220645d80dd163772c1d37782d20049482fa68ce7d240092dc9fdb5d239e3",
+      "byte_count": 2399,
+      "author": null,
+      "method": null,
+      "rights_status": "PENDING",
+      "study_data": false
+    },
+    {
+      "id": "source-020",
+      "path": "docs/EXPOSURE-PROTOCOL.md",
+      "sha256": "d904eb9c3633b365c3124bb21c7ffcc1b1bed9377366b4dff10d51281d6688cd",
+      "byte_count": 6473,
+      "author": null,
+      "method": null,
+      "rights_status": "PENDING",
+      "study_data": false
+    },
+    {
+      "id": "source-021",
+      "path": "docs/GATE-CHECKLIST.md",
+      "sha256": "48e9e785bffc1820588a9f30a448b1891c8d585950a8b2fdc05ef20a282398d3",
+      "byte_count": 3104,
+      "author": null,
+      "method": null,
+      "rights_status": "PENDING",
+      "study_data": false
+    },
+    {
+      "id": "source-022",
+      "path": "docs/STUDY-ROLES.md",
+      "sha256": "9334615d77b01357464243ffb15fad717da1332cfad442d59492255aa857939b",
+      "byte_count": 5353,
+      "author": null,
+      "method": null,
+      "rights_status": "PENDING",
+      "study_data": false
+    },
+    {
+      "id": "source-023",
+      "path": "schemas/admission.schema.json",
+      "sha256": "37b753ab5467286d481874725c8e079e3f16d7fabbd59788a4895de08b780b56",
+      "byte_count": 11678,
+      "author": null,
+      "method": null,
+      "rights_status": "PENDING",
+      "study_data": false
+    },
+    {
+      "id": "source-024",
+      "path": "src/m19/admission/__init__.py",
+      "sha256": "f6c47c5bedbd0545b8bb5dfd2f2270a9ef004945eac8cd0b2607522f717e261d",
+      "byte_count": 9591,
+      "author": null,
+      "method": null,
+      "rights_status": "PENDING",
       "study_data": false
     }
   ],
+  "rights_declarations": [
+    {
+      "source_id": "source-001",
+      "permitted": null,
+      "basis": null,
+      "reference": null,
+      "declared_by": null
+    },
+    {
+      "source_id": "source-002",
+      "permitted": null,
+      "basis": null,
+      "reference": null,
+      "declared_by": null
+    },
+    {
+      "source_id": "source-003",
+      "permitted": null,
+      "basis": null,
+      "reference": null,
+      "declared_by": null
+    },
+    {
+      "source_id": "source-004",
+      "permitted": null,
+      "basis": null,
+      "reference": null,
+      "declared_by": null
+    },
+    {
+      "source_id": "source-005",
+      "permitted": null,
+      "basis": null,
+      "reference": null,
+      "declared_by": null
+    },
+    {
+      "source_id": "source-006",
+      "permitted": null,
+      "basis": null,
+      "reference": null,
+      "declared_by": null
+    },
+    {
+      "source_id": "source-007",
+      "permitted": null,
+      "basis": null,
+      "reference": null,
+      "declared_by": null
+    },
+    {
+      "source_id": "source-008",
+      "permitted": null,
+      "basis": null,
+      "reference": null,
+      "declared_by": null
+    },
+    {
+      "source_id": "source-009",
+      "permitted": null,
+      "basis": null,
+      "reference": null,
+      "declared_by": null
+    },
+    {
+      "source_id": "source-010",
+      "permitted": null,
+      "basis": null,
+      "reference": null,
+      "declared_by": null
+    },
+    {
+      "source_id": "source-011",
+      "permitted": null,
+      "basis": null,
+      "reference": null,
+      "declared_by": null
+    },
+    {
+      "source_id": "source-012",
+      "permitted": null,
+      "basis": null,
+      "reference": null,
+      "declared_by": null
+    },
+    {
+      "source_id": "source-013",
+      "permitted": null,
+      "basis": null,
+      "reference": null,
+      "declared_by": null
+    },
+    {
+      "source_id": "source-014",
+      "permitted": null,
+      "basis": null,
+      "reference": null,
+      "declared_by": null
+    },
+    {
+      "source_id": "source-015",
+      "permitted": null,
+      "basis": null,
+      "reference": null,
+      "declared_by": null
+    },
+    {
+      "source_id": "source-016",
+      "permitted": null,
+      "basis": null,
+      "reference": null,
+      "declared_by": null
+    },
+    {
+      "source_id": "source-017",
+      "permitted": null,
+      "basis": null,
+      "reference": null,
+      "declared_by": null
+    },
+    {
+      "source_id": "source-018",
+      "permitted": null,
+      "basis": null,
+      "reference": null,
+      "declared_by": null
+    },
+    {
+      "source_id": "source-019",
+      "permitted": null,
+      "basis": null,
+      "reference": null,
+      "declared_by": null
+    },
+    {
+      "source_id": "source-020",
+      "permitted": null,
+      "basis": null,
+      "reference": null,
+      "declared_by": null
+    },
+    {
+      "source_id": "source-021",
+      "permitted": null,
+      "basis": null,
+      "reference": null,
+      "declared_by": null
+    },
+    {
+      "source_id": "source-022",
+      "permitted": null,
+      "basis": null,
+      "reference": null,
+      "declared_by": null
+    },
+    {
+      "source_id": "source-023",
+      "permitted": null,
+      "basis": null,
+      "reference": null,
+      "declared_by": null
+    },
+    {
+      "source_id": "source-024",
+      "permitted": null,
+      "basis": null,
+      "reference": null,
+      "declared_by": null
+    }
+  ],
+  "originality": {
+    "original_sut": null,
+    "declaration": null,
+    "reference": null,
+    "declared_by": null
+  },
   "data_provenance": {
     "path": "data-provenance.jsonl",
     "records": 0,
-    "reason": "No study-data artifacts authored/acquired by this P1 slice."
+    "reason": "Zero-byte ledger observed at pinned snapshot; no study data authored or acquired by this reconciliation."
   },
   "consumer_notes": {
-    "owner": "DL1 validator; INT reconciles",
-    "mapping": "Documentation fragment only; map explicit fields into final admission schema. Not admission.json or an approval. Unknown authorship/rights must not be inferred from Git.",
-    "remaining_fields": [
-      "roles with actual exposure",
-      "split_policy with numeric floors",
-      "observer_boundaries",
-      "scope_approval personally recorded by Roy"
-    ],
-    "unknown_authority": "Null/PENDING blocks admission. This template must fail Gate A."
+    "owner": "D2 owns this reconciliation packet; INT owns integration and later authorization",
+    "mapping": "source_inventory rows exactly match admission.json id/reference/purpose/provenance; source_observations and snapshot are metadata, never top-level packet fields. Hashes are embedded in row provenance and repeated as structured observations.",
+    "ids": "Retain source-001..011 by their original path; assign source-012 onward to additional included paths in lexicographic path order.",
+    "unknown_authority": "All per-source rights/author/method, role appointments/exposure/independence and observer declarations remain null/PENDING; scope and ordering receipts remain absent. No permissions inferred from hashes.",
+    "status_semantics": "This incomplete packet must be refused. A later structurally complete declaration packet still only yields PENDING_ATTESTATION_VERIFICATION, never GO."
   }
 }
