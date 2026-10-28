@@ -3,7 +3,7 @@
   "status": "PENDING",
   "gate_a": "NO-GO",
   "snapshot": {
-    "commit": "d04e524802f6054c40a9b521d7c99a55688eb7c8",
+    "commit": "5452ed3a4664d5aaab445e9a2072a93029873e81",
     "hash_basis": "SHA256 of exact Git blob bytes at the pinned commit; not checkout bytes",
     "included_paths": [
       ".gitignore",
@@ -14,6 +14,7 @@
       "data-provenance.jsonl",
       "docs/ACTIVATION.md",
       "docs/ADMISSION.md",
+      "docs/ATTESTATION-BOUNDARY.md",
       "docs/CONTRACTS.md",
       "docs/DATA.md",
       "docs/EMPTY-REPORT-STATES.md",
@@ -28,6 +29,7 @@
       "schemas/admission.schema.json",
       "src/m19/__init__.py",
       "src/m19/admission/__init__.py",
+      "src/m19/admission/attestation.py",
       "src/m19/cli.py",
       "src/m19/contracts/__init__.py"
     ],
@@ -36,153 +38,165 @@
       "admission/source-inventory.template.json": "Inventory metadata and hashes; excluded to avoid recursive self-coverage.",
       "docs/SOURCE-INVENTORY.md": "Inventory table and coverage contract; excluded to avoid recursive self-coverage."
     },
-    "scope": "24 explicitly included material files at the assembled snapshot; not an attestation of the new candidate tree",
+    "scope": "26 explicitly included material files at the assembled attestation-source snapshot; not an attestation of the new candidate tree",
     "later_changes": "docs/DATA.md is inventoried as historical bytes at the pinned snapshot, not its changed bytes in this reconciliation. The other changed inventory-bearing artifacts are excluded."
   },
   "source_inventory": [
     {
       "id": "source-001",
-      "reference": "git:d04e524802f6054c40a9b521d7c99a55688eb7c8:.gitignore",
+      "reference": "git:5452ed3a4664d5aaab445e9a2072a93029873e81:.gitignore",
       "purpose": "construction_reference_only",
       "provenance": "existing_local_committed_source; exact Git blob SHA256 3a24c79c71989f2ac80eae70a95066f7086f33aa314f5bbb568c5c33d0bc4ca2; pinned assembled snapshot, explicit exclusions documented"
     },
     {
       "id": "source-002",
-      "reference": "git:d04e524802f6054c40a9b521d7c99a55688eb7c8:README.md",
+      "reference": "git:5452ed3a4664d5aaab445e9a2072a93029873e81:README.md",
       "purpose": "construction_reference_only",
       "provenance": "existing_local_committed_source; exact Git blob SHA256 3d43efe7db53cc6b7a2aa8c976243362ebfc65769f3981b8cadbef04565fa926; pinned assembled snapshot, explicit exclusions documented"
     },
     {
       "id": "source-003",
-      "reference": "git:d04e524802f6054c40a9b521d7c99a55688eb7c8:docs/CONTRACTS.md",
+      "reference": "git:5452ed3a4664d5aaab445e9a2072a93029873e81:docs/CONTRACTS.md",
       "purpose": "construction_reference_only",
       "provenance": "existing_local_committed_source; exact Git blob SHA256 9fe25c12004baa9b787479310edcf909f9e49ff313e55d1e309ff30ed3c00789; pinned assembled snapshot, explicit exclusions documented"
     },
     {
       "id": "source-004",
-      "reference": "git:d04e524802f6054c40a9b521d7c99a55688eb7c8:docs/GRAMMAR.md",
+      "reference": "git:5452ed3a4664d5aaab445e9a2072a93029873e81:docs/GRAMMAR.md",
       "purpose": "construction_reference_only",
       "provenance": "existing_local_committed_source; exact Git blob SHA256 481826391c65063cafc06d0e5c471bbd475e74e122d6e24e331133e0c8865e39; pinned assembled snapshot, explicit exclusions documented"
     },
     {
       "id": "source-005",
-      "reference": "git:d04e524802f6054c40a9b521d7c99a55688eb7c8:node/testlens/package.json",
+      "reference": "git:5452ed3a4664d5aaab445e9a2072a93029873e81:node/testlens/package.json",
       "purpose": "construction_reference_only",
       "provenance": "existing_local_committed_source; exact Git blob SHA256 b97e5fdac19463ad157a26b4d1e9d8263fdda0a783417aac0db88cca54e5361d; pinned assembled snapshot, explicit exclusions documented"
     },
     {
       "id": "source-006",
-      "reference": "git:d04e524802f6054c40a9b521d7c99a55688eb7c8:node/testlens/src/cli.mjs",
+      "reference": "git:5452ed3a4664d5aaab445e9a2072a93029873e81:node/testlens/src/cli.mjs",
       "purpose": "construction_reference_only",
       "provenance": "existing_local_committed_source; exact Git blob SHA256 c90d7bd5e631d397f4841405eeba5c8c5f0011b8cf81f5087f9e85fa39eb351e; pinned assembled snapshot, explicit exclusions documented"
     },
     {
       "id": "source-007",
-      "reference": "git:d04e524802f6054c40a9b521d7c99a55688eb7c8:node/testlens/src/index.mjs",
+      "reference": "git:5452ed3a4664d5aaab445e9a2072a93029873e81:node/testlens/src/index.mjs",
       "purpose": "construction_reference_only",
       "provenance": "existing_local_committed_source; exact Git blob SHA256 26316888fefd751c912784de2edac807b2127b889bf321027542c931d7c917df; pinned assembled snapshot, explicit exclusions documented"
     },
     {
       "id": "source-008",
-      "reference": "git:d04e524802f6054c40a9b521d7c99a55688eb7c8:pyproject.toml",
+      "reference": "git:5452ed3a4664d5aaab445e9a2072a93029873e81:pyproject.toml",
       "purpose": "construction_reference_only",
       "provenance": "existing_local_committed_source; exact Git blob SHA256 89943105e374dadf7cddb0cb61bb470db9f97aa696814ee02df3547ab65018f5; pinned assembled snapshot, explicit exclusions documented"
     },
     {
       "id": "source-009",
-      "reference": "git:d04e524802f6054c40a9b521d7c99a55688eb7c8:src/m19/__init__.py",
+      "reference": "git:5452ed3a4664d5aaab445e9a2072a93029873e81:src/m19/__init__.py",
       "purpose": "construction_reference_only",
       "provenance": "existing_local_committed_source; exact Git blob SHA256 b71535dbbba6f8a6b35e0171426ac076ce6603008674ab6d951fb6c8ed3769fc; pinned assembled snapshot, explicit exclusions documented"
     },
     {
       "id": "source-010",
-      "reference": "git:d04e524802f6054c40a9b521d7c99a55688eb7c8:src/m19/cli.py",
+      "reference": "git:5452ed3a4664d5aaab445e9a2072a93029873e81:src/m19/cli.py",
       "purpose": "construction_reference_only",
-      "provenance": "existing_local_committed_source; exact Git blob SHA256 22863d5ccfe35b1816667c17661f2be6320fa62d5af0a845d96e62251474111a; pinned assembled snapshot, explicit exclusions documented"
+      "provenance": "existing_local_committed_source; exact Git blob SHA256 2200b422f2061ae610e766bfa151e5d041f34c0642c5f504dbab21e01118ab7e; pinned assembled snapshot, explicit exclusions documented"
     },
     {
       "id": "source-011",
-      "reference": "git:d04e524802f6054c40a9b521d7c99a55688eb7c8:src/m19/contracts/__init__.py",
+      "reference": "git:5452ed3a4664d5aaab445e9a2072a93029873e81:src/m19/contracts/__init__.py",
       "purpose": "construction_reference_only",
       "provenance": "existing_local_committed_source; exact Git blob SHA256 9f61a58453f5cc0ce715890347099260f68b7e469c3ffde1bf37e8a8dbb3ffce; pinned assembled snapshot, explicit exclusions documented"
     },
     {
       "id": "source-012",
-      "reference": "git:d04e524802f6054c40a9b521d7c99a55688eb7c8:admission/observer-boundaries.template.json",
+      "reference": "git:5452ed3a4664d5aaab445e9a2072a93029873e81:admission/observer-boundaries.template.json",
       "purpose": "construction_reference_only",
       "provenance": "existing_local_committed_source; exact Git blob SHA256 9cc358c02138f70813c5d2e4c7b7d2c6bf6e7a535ee949b3d748c1184b82236f; pinned assembled snapshot, explicit exclusions documented"
     },
     {
       "id": "source-013",
-      "reference": "git:d04e524802f6054c40a9b521d7c99a55688eb7c8:admission/roles.template.json",
+      "reference": "git:5452ed3a4664d5aaab445e9a2072a93029873e81:admission/roles.template.json",
       "purpose": "construction_reference_only",
       "provenance": "existing_local_committed_source; exact Git blob SHA256 2f444e6d544735d02fa125b4ecbdcaef4803c828037d3267bea2be9ec017aded; pinned assembled snapshot, explicit exclusions documented"
     },
     {
       "id": "source-014",
-      "reference": "git:d04e524802f6054c40a9b521d7c99a55688eb7c8:admission/split-policy.template.json",
+      "reference": "git:5452ed3a4664d5aaab445e9a2072a93029873e81:admission/split-policy.template.json",
       "purpose": "construction_reference_only",
       "provenance": "existing_local_committed_source; exact Git blob SHA256 b59741e38716859e8608e1d9520349ea769ad2499c914cc33994051d0a54af54; pinned assembled snapshot, explicit exclusions documented"
     },
     {
       "id": "source-015",
-      "reference": "git:d04e524802f6054c40a9b521d7c99a55688eb7c8:data-provenance.jsonl",
+      "reference": "git:5452ed3a4664d5aaab445e9a2072a93029873e81:data-provenance.jsonl",
       "purpose": "construction_reference_only",
       "provenance": "existing_local_committed_source; exact Git blob SHA256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855; pinned assembled snapshot, explicit exclusions documented"
     },
     {
       "id": "source-016",
-      "reference": "git:d04e524802f6054c40a9b521d7c99a55688eb7c8:docs/ACTIVATION.md",
+      "reference": "git:5452ed3a4664d5aaab445e9a2072a93029873e81:docs/ACTIVATION.md",
       "purpose": "construction_reference_only",
       "provenance": "existing_local_committed_source; exact Git blob SHA256 74936ebb9c54e6a7e3a730e8beae24b81fe6699d922e5f09302fb9838eebdb6b; pinned assembled snapshot, explicit exclusions documented"
     },
     {
       "id": "source-017",
-      "reference": "git:d04e524802f6054c40a9b521d7c99a55688eb7c8:docs/ADMISSION.md",
+      "reference": "git:5452ed3a4664d5aaab445e9a2072a93029873e81:docs/ADMISSION.md",
       "purpose": "construction_reference_only",
-      "provenance": "existing_local_committed_source; exact Git blob SHA256 29a8f52f32989c6cc5458b1e1c394b0884d22716baad35a91455e1541dc1d0a3; pinned assembled snapshot, explicit exclusions documented"
+      "provenance": "existing_local_committed_source; exact Git blob SHA256 c2fbe89fadc34f68aff88f78f00921c7a269f3b9957a168d9a6ae978c6c35452; pinned assembled snapshot, explicit exclusions documented"
     },
     {
       "id": "source-018",
-      "reference": "git:d04e524802f6054c40a9b521d7c99a55688eb7c8:docs/DATA.md",
+      "reference": "git:5452ed3a4664d5aaab445e9a2072a93029873e81:docs/DATA.md",
       "purpose": "construction_reference_only",
-      "provenance": "existing_local_committed_source; exact Git blob SHA256 1e4819694c879b53c549bea4aeaf18344e6bdaa23a027f3cbc2ee38277b28d3a; pinned assembled snapshot, explicit exclusions documented"
+      "provenance": "existing_local_committed_source; exact Git blob SHA256 bbadd7d22009788ea7b7c1f4cc0b0df3d52d0ceb1ae33c1a679589df8c1b7ce9; pinned assembled snapshot, explicit exclusions documented"
     },
     {
       "id": "source-019",
-      "reference": "git:d04e524802f6054c40a9b521d7c99a55688eb7c8:docs/EMPTY-REPORT-STATES.md",
+      "reference": "git:5452ed3a4664d5aaab445e9a2072a93029873e81:docs/EMPTY-REPORT-STATES.md",
       "purpose": "construction_reference_only",
       "provenance": "existing_local_committed_source; exact Git blob SHA256 00a220645d80dd163772c1d37782d20049482fa68ce7d240092dc9fdb5d239e3; pinned assembled snapshot, explicit exclusions documented"
     },
     {
       "id": "source-020",
-      "reference": "git:d04e524802f6054c40a9b521d7c99a55688eb7c8:docs/EXPOSURE-PROTOCOL.md",
+      "reference": "git:5452ed3a4664d5aaab445e9a2072a93029873e81:docs/EXPOSURE-PROTOCOL.md",
       "purpose": "construction_reference_only",
       "provenance": "existing_local_committed_source; exact Git blob SHA256 d904eb9c3633b365c3124bb21c7ffcc1b1bed9377366b4dff10d51281d6688cd; pinned assembled snapshot, explicit exclusions documented"
     },
     {
       "id": "source-021",
-      "reference": "git:d04e524802f6054c40a9b521d7c99a55688eb7c8:docs/GATE-CHECKLIST.md",
+      "reference": "git:5452ed3a4664d5aaab445e9a2072a93029873e81:docs/GATE-CHECKLIST.md",
       "purpose": "construction_reference_only",
       "provenance": "existing_local_committed_source; exact Git blob SHA256 48e9e785bffc1820588a9f30a448b1891c8d585950a8b2fdc05ef20a282398d3; pinned assembled snapshot, explicit exclusions documented"
     },
     {
       "id": "source-022",
-      "reference": "git:d04e524802f6054c40a9b521d7c99a55688eb7c8:docs/STUDY-ROLES.md",
+      "reference": "git:5452ed3a4664d5aaab445e9a2072a93029873e81:docs/STUDY-ROLES.md",
       "purpose": "construction_reference_only",
       "provenance": "existing_local_committed_source; exact Git blob SHA256 9334615d77b01357464243ffb15fad717da1332cfad442d59492255aa857939b; pinned assembled snapshot, explicit exclusions documented"
     },
     {
       "id": "source-023",
-      "reference": "git:d04e524802f6054c40a9b521d7c99a55688eb7c8:schemas/admission.schema.json",
+      "reference": "git:5452ed3a4664d5aaab445e9a2072a93029873e81:schemas/admission.schema.json",
       "purpose": "construction_reference_only",
       "provenance": "existing_local_committed_source; exact Git blob SHA256 37b753ab5467286d481874725c8e079e3f16d7fabbd59788a4895de08b780b56; pinned assembled snapshot, explicit exclusions documented"
     },
     {
       "id": "source-024",
-      "reference": "git:d04e524802f6054c40a9b521d7c99a55688eb7c8:src/m19/admission/__init__.py",
+      "reference": "git:5452ed3a4664d5aaab445e9a2072a93029873e81:src/m19/admission/__init__.py",
       "purpose": "construction_reference_only",
-      "provenance": "existing_local_committed_source; exact Git blob SHA256 f6c47c5bedbd0545b8bb5dfd2f2270a9ef004945eac8cd0b2607522f717e261d; pinned assembled snapshot, explicit exclusions documented"
+      "provenance": "existing_local_committed_source; exact Git blob SHA256 febe304c2f7cd3b71a6118b714112922cbfe62db17b6b25afd175e1dcf2ae18e; pinned assembled snapshot, explicit exclusions documented"
+    },
+    {
+      "id": "source-025",
+      "reference": "git:5452ed3a4664d5aaab445e9a2072a93029873e81:docs/ATTESTATION-BOUNDARY.md",
+      "purpose": "construction_reference_only",
+      "provenance": "existing_local_committed_source; exact Git blob SHA256 f86ebaa9334651763305048455fa91f3be66aa2d4b564b8ee043437e7a21258f; pinned assembled snapshot, explicit exclusions documented"
+    },
+    {
+      "id": "source-026",
+      "reference": "git:5452ed3a4664d5aaab445e9a2072a93029873e81:src/m19/admission/attestation.py",
+      "purpose": "construction_reference_only",
+      "provenance": "existing_local_committed_source; exact Git blob SHA256 cfe82aac93dac59ba3aa14b9a03343d473fd0c78e7b565a6d641670c553d11a7; pinned assembled snapshot, explicit exclusions documented"
     }
   ],
   "source_observations": [
@@ -279,8 +293,8 @@
     {
       "id": "source-010",
       "path": "src/m19/cli.py",
-      "sha256": "22863d5ccfe35b1816667c17661f2be6320fa62d5af0a845d96e62251474111a",
-      "byte_count": 2119,
+      "sha256": "2200b422f2061ae610e766bfa151e5d041f34c0642c5f504dbab21e01118ab7e",
+      "byte_count": 2181,
       "author": null,
       "method": null,
       "rights_status": "PENDING",
@@ -349,8 +363,8 @@
     {
       "id": "source-017",
       "path": "docs/ADMISSION.md",
-      "sha256": "29a8f52f32989c6cc5458b1e1c394b0884d22716baad35a91455e1541dc1d0a3",
-      "byte_count": 5960,
+      "sha256": "c2fbe89fadc34f68aff88f78f00921c7a269f3b9957a168d9a6ae978c6c35452",
+      "byte_count": 6597,
       "author": null,
       "method": null,
       "rights_status": "PENDING",
@@ -359,8 +373,8 @@
     {
       "id": "source-018",
       "path": "docs/DATA.md",
-      "sha256": "1e4819694c879b53c549bea4aeaf18344e6bdaa23a027f3cbc2ee38277b28d3a",
-      "byte_count": 4738,
+      "sha256": "bbadd7d22009788ea7b7c1f4cc0b0df3d52d0ceb1ae33c1a679589df8c1b7ce9",
+      "byte_count": 6752,
       "author": null,
       "method": null,
       "rights_status": "PENDING",
@@ -419,8 +433,28 @@
     {
       "id": "source-024",
       "path": "src/m19/admission/__init__.py",
-      "sha256": "f6c47c5bedbd0545b8bb5dfd2f2270a9ef004945eac8cd0b2607522f717e261d",
-      "byte_count": 9591,
+      "sha256": "febe304c2f7cd3b71a6118b714112922cbfe62db17b6b25afd175e1dcf2ae18e",
+      "byte_count": 9758,
+      "author": null,
+      "method": null,
+      "rights_status": "PENDING",
+      "study_data": false
+    },
+    {
+      "id": "source-025",
+      "path": "docs/ATTESTATION-BOUNDARY.md",
+      "sha256": "f86ebaa9334651763305048455fa91f3be66aa2d4b564b8ee043437e7a21258f",
+      "byte_count": 6839,
+      "author": null,
+      "method": null,
+      "rights_status": "PENDING",
+      "study_data": false
+    },
+    {
+      "id": "source-026",
+      "path": "src/m19/admission/attestation.py",
+      "sha256": "cfe82aac93dac59ba3aa14b9a03343d473fd0c78e7b565a6d641670c553d11a7",
+      "byte_count": 8511,
       "author": null,
       "method": null,
       "rights_status": "PENDING",
@@ -595,6 +629,20 @@
       "basis": null,
       "reference": null,
       "declared_by": null
+    },
+    {
+      "source_id": "source-025",
+      "permitted": null,
+      "basis": null,
+      "reference": null,
+      "declared_by": null
+    },
+    {
+      "source_id": "source-026",
+      "permitted": null,
+      "basis": null,
+      "reference": null,
+      "declared_by": null
     }
   ],
   "originality": {
@@ -611,7 +659,7 @@
   "consumer_notes": {
     "owner": "D2 owns this reconciliation packet; INT owns integration and later authorization",
     "mapping": "source_inventory rows exactly match admission.json id/reference/purpose/provenance; source_observations and snapshot are metadata, never top-level packet fields. Hashes are embedded in row provenance and repeated as structured observations.",
-    "ids": "Retain source-001..011 by their original path; assign source-012 onward to additional included paths in lexicographic path order.",
+    "ids": "Retain source-001..024 by original paths; new source-025 is docs/ATTESTATION-BOUNDARY.md and source-026 is src/m19/admission/attestation.py, assigned lexicographically.",
     "unknown_authority": "All per-source rights/author/method, role appointments/exposure/independence and observer declarations remain null/PENDING; scope and ordering receipts remain absent. No permissions inferred from hashes.",
     "status_semantics": "This incomplete packet must be refused. A later structurally complete declaration packet still only yields PENDING_ATTESTATION_VERIFICATION, never GO."
   }
