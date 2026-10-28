@@ -51,11 +51,14 @@ class AdmissionResult:
     reasons: tuple[str, ...]
     packet_valid: bool = False
     execution_authorized: bool = False
+    attestation_verified: bool = False
+    authority_decision: str = "unconfigured"
 
     def as_dict(self) -> dict:
         return {"gate": self.gate, "status": self.status, "reasons": list(self.reasons),
                 "packet_valid": self.packet_valid, "execution_authorized": self.execution_authorized,
-                "runtime": "unverified", "attestation_verified": False}
+                "runtime": "unverified", "attestation_verified": self.attestation_verified,
+                "authority_decision": self.authority_decision}
 
 
 def validate_packet(packet: object, gate: str = "A") -> AdmissionResult:

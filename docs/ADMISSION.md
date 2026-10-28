@@ -12,6 +12,15 @@ JSON assertions cannot authenticate Roy's signature, independence or source righ
 The authorized owner must later verify actual evidence and implement/qualify the admission transition.
 This is an explicit remaining integration boundary, not completed scientific admission.
 
+The CLI now routes Gate A through the keyless `inspect_attestation` port with no
+configured verifier. `authority_decision` is `unconfigured` by default; structural
+refusals still take precedence. No verifier selection flag, receipt file loader,
+environment override, fake adapter or GO path is supplied. See
+[ATTESTATION-BOUNDARY.md](ATTESTATION-BOUNDARY.md) for the typed future trust contract.
+Only a separately configured, actually trusted verifier could return a bound
+`VERIFIED_ATTESTATION_NO_GO` through the programmatic port; even that result keeps
+`execution_authorized: false`. No such verifier exists in this app or ran here.
+
 ## Packet seam
 
 `schemas/admission.schema.json` describes the administrative structure; stdlib

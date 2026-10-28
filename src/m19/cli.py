@@ -5,6 +5,7 @@ import json
 from pathlib import Path
 
 from m19.admission import AdmissionResult, validate_packet
+from m19.admission.attestation import inspect_attestation
 
 
 def _unique_object(pairs: list[tuple[str, object]]) -> dict:
@@ -37,7 +38,7 @@ def main() -> int:
                     raise ValueError("packet exceeds 1 MiB")
                 packet = json.loads(args.packet.read_text(encoding="utf-8"),
                                     object_pairs_hook=_unique_object, parse_constant=_reject_constant)
-                result = validate_packet(packet)
+                result = inspect_attestation(packet)
             except (OSError, UnicodeError, ValueError, RecursionError) as exc:
                 result = AdmissionResult("A", "SKIPPED_DATA_ADMISSION", (f"packet unreadable or invalid: {exc}",))
         print(json.dumps(result.as_dict(), indent=2))
