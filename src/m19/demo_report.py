@@ -18,10 +18,12 @@ MAX_CASES = 100
 CATEGORIES = frozenset({"baseline_clean", "benign_repair", "false_repair", "silenced",
                         "intermittent", "infra_error"})
 OUTCOMES = frozenset({"pass", "fail", "skipped", "infra_error", "unknown"})
+STATES = frozenset({"valid", "invalid", "unknown", "infra_error"})
+METRICS_LABEL = "fixture-derived; not scientific results"
 _FALSE_FLAGS = frozenset({
     "runtime_verified", "execution_authorized", "measured_results",
     "attestation_verified", "scientific_independence_claimed", "human_independent",
-    "live_dispatch_enabled", "measured", "containment_verified",
+    "live_dispatch_enabled", "measured", "containment_verified", "study_result",
 })
 
 
@@ -72,7 +74,7 @@ def _text(value: object, field: str) -> str:
 def _validate_metrics(metrics: object) -> None:
     if not isinstance(metrics, dict) or not metrics:
         raise ValueError("missing fixture-derived metrics")
-    if metrics.get("origin") != "AUTHORED" or "fixture" not in _text(metrics.get("label"), "metrics label").lower():
+    if metrics.get("origin") != "AUTHORED" or metrics.get("label") != METRICS_LABEL:
         raise ValueError("metrics require AUTHORED origin and fixture-derived label")
 
     def visit(value: object, key: str = "") -> None:
@@ -108,6 +110,42 @@ def _validate_metrics(metrics: object) -> None:
     visit(metrics)
 
 
+def _flags(value: object) -> dict | None:
+    if value is None:
+        return None
+    if not isinstance(value, dict) or set(value) != {"origin", "runtime_verified", "process_exit", "external_evidence", "status"}:
+        raise ValueError("invalid authored evidence flag shape")
+    if value["origin"] != "AUTHORED" or value["runtime_verified"] is not False:
+        raise ValueError("evidence flags must be unverified AUTHORED fixtures")
+    if value["status"] not in STATES:
+        raise ValueError("invalid fixture evidence status")
+    exit_code = value["process_exit"]
+    if exit_code is not None and (type(exit_code) is not int or not -255 <= exit_code <= 255):
+        raise ValueError("invalid fixture process exit")
+    if value["external_evidence"] is not None and type(value["external_evidence"]) is not bool:
+        raise ValueError("invalid fixture external evidence flag")
+    return value
+
+
+def _supervisor(value: object) -> dict:
+    if value is None:
+        return {"status": "unknown", "green": False, "reasons": ["supervisor_not_supplied"],
+                "origin": "AUTHORED", "runtime_verified": False,
+                "process_exit": None, "external_evidence": None}
+    fields = {"status", "green", "reasons", "origin", "runtime_verified", "process_exit", "external_evidence"}
+    if not isinstance(value, dict) or set(value) != fields:
+        raise ValueError("invalid authored supervisor shape")
+    _flags({key: value[key] for key in fields - {"green", "reasons"}})
+    if type(value["green"]) is not bool:
+        raise ValueError("supervisor green must be boolean")
+    if not isinstance(value["reasons"], list) or any(not isinstance(reason, str) or not reason.strip() for reason in value["reasons"]):
+        raise ValueError("supervisor reasons must be strings")
+    if value["green"] and (value["status"] != "valid" or value["process_exit"] != 0
+                           or value["external_evidence"] is not True or value["reasons"]):
+        raise ValueError("unsupported green supervisor claim")
+    return value
+
+
 def _attempts(value: object, inventory: set[str]) -> set[str]:
     if not isinstance(value, list):
         raise ValueError("outcome run must be an array")
@@ -120,6 +158,31 @@ def _attempts(value: object, inventory: set[str]) -> set[str]:
             raise ValueError("unknown/duplicate test id or unsupported outcome")
         seen.add(identifier)
     return seen
+
+
+def _phase(attempts: list, inventory: set[str], flags: object, supervisor: object) -> dict:
+    evidence = _flags(flags)
+    summary = _supervisor(supervisor)
+    ids = _attempts(attempts, inventory)
+    outcomes = [attempt["outcome"] for attempt in attempts]
+    complete = bool(inventory) and ids == inventory and bool(outcomes)
+    if summary["status"] == "valid":
+        if (not complete or evidence is None or evidence["status"] != "valid"
+                or evidence["external_evidence"] is not True or evidence["process_exit"] is None
+                or any(outcome in {"skipped", "infra_error", "unknown"} for outcome in outcomes)):
+            raise ValueError("valid supervisor lacks complete authored fixture evidence")
+        if all(outcome == "pass" for outcome in outcomes) != (evidence["process_exit"] == 0):
+            raise ValueError("valid fixture process/outcome account conflicts")
+    if evidence is not None and supervisor is not None:
+        if any(summary[key] != evidence[key] for key in ("process_exit", "external_evidence")):
+            raise ValueError("supervisor and fixture flags disagree")
+        if evidence["status"] == "invalid" and summary["status"] != "invalid":
+            raise ValueError("invalid fixture evidence cannot become success/unknown")
+    if summary["green"] and (not complete or any(outcome != "pass" for outcome in outcomes)):
+        raise ValueError("green supervisor conflicts with outcome inventory")
+    if not complete and summary["status"] not in {"invalid", "unknown", "infra_error"}:
+        raise ValueError("incomplete inventory cannot be valid")
+    return summary
 
 
 def _validate_run(run: dict) -> None:
@@ -161,25 +224,31 @@ def _validate_run(run: dict) -> None:
             if not isinstance(case.get(field), list):
                 raise ValueError(f"case {field} must be a list")
         inventory = case["original_inventory"]
-        if not inventory or any(not isinstance(item, str) or not item.strip() for item in inventory):
+        if any(not isinstance(item, str) or not item.strip() for item in inventory):
             raise ValueError("inventory requires nonempty test-id strings")
         inventory_ids = set(inventory)
         if len(inventory_ids) != len(inventory):
             raise ValueError("duplicate inventory test id")
-        if _attempts(case["before"], inventory_ids) != inventory_ids:
-            raise ValueError("before run must account for every original test")
-        after_ids = _attempts(case["after"], inventory_ids)
-        # Deliberate deletion is an authored silencing example, never a green run.
-        if after_ids != inventory_ids and case["category"] != "silenced":
-            raise ValueError("missing after evidence outside explicit silencing case")
+        before_summary = _phase(case["before"], inventory_ids, case.get("before_evidence"), case.get("before_supervisor"))
+        after_summary = _phase(case["after"], inventory_ids, case.get("after_evidence"), case.get("supervisor"))
+        if not inventory and (before_summary["status"] != "invalid" or after_summary["status"] != "invalid"):
+            raise ValueError("zero inventory requires explicit invalid supervisors")
         if any(not isinstance(tag, str) or not tag.strip() for tag in case["patch_tags"]):
             raise ValueError("patch tags must be nonempty strings")
         if "repetitions" in case:
             if not isinstance(case["repetitions"], list) or not case["repetitions"]:
                 raise ValueError("repetitions must contain outcome runs")
-            for repetition in case["repetitions"]:
-                if _attempts(repetition, inventory_ids) != inventory_ids:
-                    raise ValueError("repetition missing original test evidence")
+            repetitions = case["repetitions"]
+            flags = case.get("repetition_evidence", [None] * len(repetitions))
+            summaries = case.get("repetition_supervisors", [None] * len(repetitions))
+            if not isinstance(flags, list) or not isinstance(summaries, list) or len(flags) != len(repetitions) or len(summaries) != len(repetitions):
+                raise ValueError("repetition flags/supervisors must align with runs")
+            for repetition, evidence, summary in zip(repetitions, flags, summaries):
+                checked = _phase(repetition, inventory_ids, evidence, summary)
+                if after_summary["green"] and not checked["green"]:
+                    raise ValueError("overall green contradicts repeated-run supervisor")
+        elif "repetition_evidence" in case or "repetition_supervisors" in case:
+            raise ValueError("orphan repetition metadata")
         if not {"expected_business", "observed_business"} <= case.keys():
             raise ValueError("missing authored business comparison")
 
@@ -202,6 +271,16 @@ def _display(value: object) -> str:
     return escape(text, quote=True)
 
 
+def _supervisor_panel(supervisor: object, evidence: object) -> str:
+    summary = _supervisor(supervisor)
+    return ('<aside class="supervisor"><p class="eyebrow">Invented fixture supervisor · '
+            + _display(summary["status"]) + '</p><p><b>Authored green flag:</b> '
+            + _display(summary["green"]) + '</p><p><b>Reasons:</b> '
+            + _display(summary["reasons"]) + '</p><pre>' + _display(summary)
+            + '</pre><p><b>Invented flags:</b> ' + _display(evidence)
+            + '</p><p>No actual process, external evidence or runtime verification.</p></aside>')
+
+
 def _html(report: dict) -> bytes:
     cards = []
     for case in report["run"]["cases"]:
@@ -211,16 +290,25 @@ def _html(report: dict) -> bytes:
             '<article><p class="eyebrow">AUTHORED · ' + field("category") + '</p>'
             '<h2>' + field("label") + '</h2><p class="id">' + field("id") + '</p>'
             '<p>' + field("requirement") + '</p><div class="strips"><section><h3>Before</h3><pre>'
-            + field("before") + '</pre></section><section><h3>After</h3><pre>' + field("after")
-            + '</pre></section></div><p><b>Repair tags:</b> ' + field("patch_tags")
+            + field("before") + '</pre>' + _supervisor_panel(case.get("before_supervisor"), case.get("before_evidence"))
+            + '</section><section><h3>After / overall account</h3><pre>' + field("after")
+            + '</pre>' + _supervisor_panel(case.get("supervisor"), case.get("after_evidence"))
+            + '</section></div><p><b>Repair tags:</b> ' + field("patch_tags")
             + '</p><p><b>Original inventory:</b> ' + field("original_inventory")
             + '</p><p><b>Business fixture:</b> expected ' + field("expected_business")
             + ' / observed ' + field("observed_business") + '</p><p>' + field("explanation")
             + '</p></article>'
         )
         if "repetitions" in case:
+            runs = case["repetitions"]
+            flags = case.get("repetition_evidence", [None] * len(runs))
+            summaries = case.get("repetition_supervisors", [None] * len(runs))
+            repeated = []
+            for index, (run, evidence, summary) in enumerate(zip(runs, flags, summaries), start=1):
+                repeated.append('<section><h3>Authored run ' + str(index) + '</h3><pre>'
+                                + _display(run) + '</pre>' + _supervisor_panel(summary, evidence) + '</section>')
             cards.append('<article><h3>Authored repeated-run strips · ' + field("id")
-                         + '</h3><pre>' + field("repetitions") + '</pre></article>')
+                         + '</h3><div class="strips">' + ''.join(repeated) + '</div></article>')
     document = '''<!doctype html><html lang="en"><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'">
@@ -231,6 +319,7 @@ main{max-width:1100px;margin:auto;padding:40px 24px}h1{font-size:clamp(2rem,5vw,
 .eyebrow{color:#7edac7;text-transform:uppercase;letter-spacing:.1em;font-size:12px}.id{color:#9aaabd}
 article{background:#172536;border:1px solid #30475e;border-radius:16px;padding:24px;margin:24px 0}
 .strips{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#101a27;padding:16px;border-radius:10px}
+.supervisor{border-top:1px solid #456078;margin-top:12px;padding-top:10px;font-size:14px}
 h2,h3{line-height:1.3}footer{color:#9aaabd}b{color:#a9d7f0}</style><main>
 <p class="eyebrow">M19 / Repair & flake study / Authored walkthrough</p>
 <h1>When green can hide a broken journey</h1>'''

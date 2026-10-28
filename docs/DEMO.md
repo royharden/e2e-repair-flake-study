@@ -4,8 +4,8 @@ The stdlib report consumer accepts schema_version 1, origin AUTHORED, mode fixtu
 run_id m19-authored-demo and runtime_verified false. It consumes the provisional
 engine/pipeline API; integration remains INT-owned and runtime unverified.
 
-Every case supplies id, label, category, requirement, origin, nonempty before/after
-outcome arrays, nonempty original_inventory, patch_tags, expected_business,
+Every case supplies id, label, category, requirement, origin, before/after
+outcome arrays, original_inventory, patch_tags, expected_business,
 observed_business and explanation. Nested projected/supervisor/attempt fields may
 be supplied by the pipeline and remain explicitly authored. IDs must be unique.
 The ledger requires known_usd 0, unknown_liability 0 and live_dispatch_enabled
@@ -52,10 +52,41 @@ all original IDs; after can omit IDs only in an explicitly silenced authored cas
 Optional repetitions are displayed per run. The report does not treat silencing
 or omitted evidence as a green outcome. Other invalid inventory examples are
 rejected, rather than accepted as evidence. Categories use the declared finite
-set. Metrics require AUTHORED origin and a fixture-derived label, nonnegative
+set. Metrics require AUTHORED origin and label fixture-derived; not scientific results, nonnegative
 integer counters, and complete numerator/denominator/value fractions. Fractions
 match their counters; a zero denominator has null value. Unknown/infra evidence
 is retained in the source account, never recast as measured green results.
 Scientific eligibility/denominator computation remains the engine's declared
 algorithm and requires later integrated validation. No scientific score is inferred.
 The ledger also accepts the contract's compatibility liability key only at zero.
+
+## Supervisor reconciliation (contract v1.3)
+
+Dedicated invented-fixture supervisor panels sit beside before, after/overall and
+each repetition strip. They display status, green, reasons, AUTHORED origin,
+runtime_verified false, process_exit and external_evidence fixture flags. These
+are invented toy declarations, never process observations or containment proof.
+After/overall is the D3 aggregate account when repetitions exist; individual
+repetition supervisors stay visible. Unknown, invalid and infra states remain
+explicit, and missing supervisors display unknown/false with a missing-source
+reason. Nothing fills null evidence with green.
+
+Supplied flag objects have exactly origin, runtime_verified, process_exit,
+external_evidence and status. Supervisors add exactly green and reasons. Status
+is valid/invalid/unknown/infra_error; exits are null or bounded integers -255..255;
+external flags are null or booleans. Reasons are bounded strings. Green requires
+valid, complete nonempty inventory, all-pass outcomes, fixture exit0 and explicit
+true external fixture evidence, and cannot contradict a repeated-run supervisor.
+Valid phases require explicit valid authored flags with a process/outcome account
+that agrees. No real execution or external-evidence claim is made. Repetition
+metadata must align with its individual runs; orphan metadata rejects.
+
+Zero inventory is retained only with explicit invalid before/after supervisors.
+Missing outcome evidence can be retained as unknown/invalid/infra, never as valid
+or green. Malformed outcome entries, duplicate/unexpected IDs and invalid flag
+shapes still reject. This supersedes earlier generic nonempty-inventory and
+complete-run wording where a disclosed invalid authored example is retained.
+The metrics root label is exactly `fixture-derived; not scientific results`.
+D2 declarations use the common D3 helper; this report validates declaration shape
+and renders them as authored, without recomputing measured eligibility/statistics.
+Actual engine/helper/report integration and rendering remain runtime unverified.
