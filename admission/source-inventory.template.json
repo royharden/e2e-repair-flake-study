@@ -1,0 +1,171 @@
+{
+  "schema_version": "m19-source-inventory-draft-v1",
+  "status": "PENDING",
+  "gate_a": "NO-GO",
+  "snapshot": {
+    "commit": "abbbae81e6401ec45a514762018dfb4b0967ae9c",
+    "hash_basis": "exact Git blob bytes at snapshot commit",
+    "coverage": "all 11 tracked baseline files; excludes newly authored P1 files and later integrations"
+  },
+  "rights_declarations": {
+    "status": "PENDING",
+    "declarant": null,
+    "reference": null,
+    "release_license": null
+  },
+  "originality": {
+    "status": "PENDING",
+    "declarant": null,
+    "reference": null
+  },
+  "source_inventory": [
+    {
+      "path": ".gitignore",
+      "sha256": "be9b49a0747d97ac9e6902ffed2a16a89c1c2a25615812d61c8f3a2da892d1dc",
+      "kind": "source_or_configuration_or_documentation",
+      "origin": "existing_local_committed_source",
+      "author": null,
+      "method": null,
+      "intended_use": "construction_reference_only",
+      "rights_status": "PENDING",
+      "rights_reference": null,
+      "study_data": false
+    },
+    {
+      "path": "README.md",
+      "sha256": "3d43efe7db53cc6b7a2aa8c976243362ebfc65769f3981b8cadbef04565fa926",
+      "kind": "source_or_configuration_or_documentation",
+      "origin": "existing_local_committed_source",
+      "author": null,
+      "method": null,
+      "intended_use": "construction_reference_only",
+      "rights_status": "PENDING",
+      "rights_reference": null,
+      "study_data": false
+    },
+    {
+      "path": "docs/CONTRACTS.md",
+      "sha256": "9fe25c12004baa9b787479310edcf909f9e49ff313e55d1e309ff30ed3c00789",
+      "kind": "source_or_configuration_or_documentation",
+      "origin": "existing_local_committed_source",
+      "author": null,
+      "method": null,
+      "intended_use": "construction_reference_only",
+      "rights_status": "PENDING",
+      "rights_reference": null,
+      "study_data": false
+    },
+    {
+      "path": "docs/GRAMMAR.md",
+      "sha256": "481826391c65063cafc06d0e5c471bbd475e74e122d6e24e331133e0c8865e39",
+      "kind": "source_or_configuration_or_documentation",
+      "origin": "existing_local_committed_source",
+      "author": null,
+      "method": null,
+      "intended_use": "construction_reference_only",
+      "rights_status": "PENDING",
+      "rights_reference": null,
+      "study_data": false
+    },
+    {
+      "path": "node/testlens/package.json",
+      "sha256": "b97e5fdac19463ad157a26b4d1e9d8263fdda0a783417aac0db88cca54e5361d",
+      "kind": "source_or_configuration_or_documentation",
+      "origin": "existing_local_committed_source",
+      "author": null,
+      "method": null,
+      "intended_use": "construction_reference_only",
+      "rights_status": "PENDING",
+      "rights_reference": null,
+      "study_data": false
+    },
+    {
+      "path": "node/testlens/src/cli.mjs",
+      "sha256": "c90d7bd5e631d397f4841405eeba5c8c5f0011b8cf81f5087f9e85fa39eb351e",
+      "kind": "source_or_configuration_or_documentation",
+      "origin": "existing_local_committed_source",
+      "author": null,
+      "method": null,
+      "intended_use": "construction_reference_only",
+      "rights_status": "PENDING",
+      "rights_reference": null,
+      "study_data": false
+    },
+    {
+      "path": "node/testlens/src/index.mjs",
+      "sha256": "26316888fefd751c912784de2edac807b2127b889bf321027542c931d7c917df",
+      "kind": "source_or_configuration_or_documentation",
+      "origin": "existing_local_committed_source",
+      "author": null,
+      "method": null,
+      "intended_use": "construction_reference_only",
+      "rights_status": "PENDING",
+      "rights_reference": null,
+      "study_data": false
+    },
+    {
+      "path": "pyproject.toml",
+      "sha256": "89943105e374dadf7cddb0cb61bb470db9f97aa696814ee02df3547ab65018f5",
+      "kind": "source_or_configuration_or_documentation",
+      "origin": "existing_local_committed_source",
+      "author": null,
+      "method": null,
+      "intended_use": "construction_reference_only",
+      "rights_status": "PENDING",
+      "rights_reference": null,
+      "study_data": false
+    },
+    {
+      "path": "src/m19/__init__.py",
+      "sha256": "b71535dbbba6f8a6b35e0171426ac076ce6603008674ab6d951fb6c8ed3769fc",
+      "kind": "source_or_configuration_or_documentation",
+      "origin": "existing_local_committed_source",
+      "author": null,
+      "method": null,
+      "intended_use": "construction_reference_only",
+      "rights_status": "PENDING",
+      "rights_reference": null,
+      "study_data": false
+    },
+    {
+      "path": "src/m19/cli.py",
+      "sha256": "926e33937097b9dc34e84699ae730f7e9e29f63e5abdc18b8a686fa54edf757f",
+      "kind": "source_or_configuration_or_documentation",
+      "origin": "existing_local_committed_source",
+      "author": null,
+      "method": null,
+      "intended_use": "construction_reference_only",
+      "rights_status": "PENDING",
+      "rights_reference": null,
+      "study_data": false
+    },
+    {
+      "path": "src/m19/contracts/__init__.py",
+      "sha256": "9f61a58453f5cc0ce715890347099260f68b7e469c3ffde1bf37e8a8dbb3ffce",
+      "kind": "source_or_configuration_or_documentation",
+      "origin": "existing_local_committed_source",
+      "author": null,
+      "method": null,
+      "intended_use": "construction_reference_only",
+      "rights_status": "PENDING",
+      "rights_reference": null,
+      "study_data": false
+    }
+  ],
+  "data_provenance": {
+    "path": "data-provenance.jsonl",
+    "records": 0,
+    "reason": "No study-data artifacts authored/acquired by this P1 slice."
+  },
+  "consumer_notes": {
+    "owner": "DL1 validator; INT reconciles",
+    "mapping": "Documentation fragment only; map explicit fields into final admission schema. Not admission.json or an approval. Unknown authorship/rights must not be inferred from Git.",
+    "remaining_fields": [
+      "roles with actual exposure",
+      "split_policy with numeric floors",
+      "observer_boundaries",
+      "scope_approval personally recorded by Roy"
+    ],
+    "unknown_authority": "Null/PENDING blocks admission. This template must fail Gate A."
+  }
+}
