@@ -13,7 +13,7 @@ FLOORS = {"dev": {"R": 12, "B": 6, "families": 4},
 BOUNDARIES = ("worker_no_control_access", "model_no_oracle_access",
               "builder_no_heldout_access", "custody_outside_repo")
 _PENDING = re.compile(r"(?<![A-Za-z0-9])(pending|placeholder|unassigned|unknown|todo|tbd|draft|null|none)(?![A-Za-z0-9])", re.I)
-_TIMESTAMP = re.compile(r"[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\.[0-9]+)?(?:Z|[+-][0-9]{2}:[0-9]{2})")
+_TIMESTAMP = re.compile(r"[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\.[0-9]+)?(?:Z|[+-](?:[01][0-9]|2[0-3]):[0-5][0-9])")
 
 
 def _text(value: object) -> bool:
