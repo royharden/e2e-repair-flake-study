@@ -1,0 +1,132 @@
+{
+  "schema_version": "m19-role-fragment-draft-v1",
+  "status": "PENDING",
+  "gate_a": "NO-GO",
+  "roles": {
+    "builder": {
+      "status": "PENDING",
+      "identity": null,
+      "appointment_reference": null,
+      "exposure": {
+        "status": "PENDING",
+        "record_reference": null,
+        "complete": null,
+        "independence_verdict": null
+      }
+    },
+    "h0_author": {
+      "status": "PENDING",
+      "identity": null,
+      "appointment_reference": null,
+      "exposure": {
+        "status": "PENDING",
+        "record_reference": null,
+        "complete": null,
+        "independence_verdict": null
+      }
+    },
+    "h0_reviewer": {
+      "status": "PENDING",
+      "identity": null,
+      "appointment_reference": null,
+      "exposure": {
+        "status": "PENDING",
+        "record_reference": null,
+        "complete": null,
+        "independence_verdict": null
+      }
+    },
+    "custodian": {
+      "status": "PENDING",
+      "identity": null,
+      "appointment_reference": null,
+      "exposure": {
+        "status": "PENDING",
+        "record_reference": null,
+        "complete": null,
+        "independence_verdict": null
+      }
+    },
+    "labeller": {
+      "status": "PENDING",
+      "identity": null,
+      "appointment_reference": null,
+      "exposure": {
+        "status": "PENDING",
+        "record_reference": null,
+        "complete": null,
+        "independence_verdict": null
+      }
+    }
+  },
+  "constraints": {
+    "distinct_actual_sessions": [
+      [
+        "builder",
+        "h0_author"
+      ],
+      [
+        "builder",
+        "custodian"
+      ]
+    ],
+    "callsign_difference_is_not_independence": true,
+    "all_five_appointments_required": true,
+    "h0_freeze_before_any_variant_authored": true,
+    "appointment_and_exposure_review_required": true
+  },
+  "observed_preparer_access": {
+    "actor": "0B42_Codex_gpt-61-sol_N20M19DL2_D2",
+    "session_id": "01a18130-5aca-7e62-8c7e-888f9b534ea6",
+    "scope": "partial self-observation for administrative preparation only; not a study-role exposure attestation",
+    "complete": false,
+    "events": [
+      {
+        "action": "read",
+        "root": "OUTER",
+        "path": "planning/promoted/PLAN-M19-v1.md"
+      },
+      {
+        "action": "read",
+        "root": "OUTER",
+        "path": "AGENTS.md"
+      },
+      {
+        "action": "read",
+        "root": "INNER",
+        "path": "README.md"
+      },
+      {
+        "action": "read",
+        "root": "INNER",
+        "path": "src/m19/contracts/__init__.py"
+      },
+      {
+        "action": "author",
+        "root": "INNER",
+        "path": "docs/DATA.md"
+      },
+      {
+        "action": "author",
+        "root": "INNER",
+        "path": "docs/SOURCE-INVENTORY.md"
+      },
+      {
+        "action": "author",
+        "root": "INNER",
+        "path": "admission/source-inventory.template.json"
+      },
+      {
+        "action": "author",
+        "root": "INNER",
+        "path": "data-provenance.jsonl"
+      }
+    ],
+    "other_seat_exposure": "unknown; no assertion"
+  },
+  "consumer_notes": {
+    "owner": "DL1 final schema; INT reconciles",
+    "mapping": "Map roles explicitly into final admission.json. This fragment is deliberately incomplete and must not pass Gate A. Constraints are declared policy, not checks executed.",
+    "scope_approval": null
+  }
+}
