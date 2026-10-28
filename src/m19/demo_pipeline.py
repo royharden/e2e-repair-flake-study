@@ -83,6 +83,8 @@ def _metrics(value: object) -> None:
         if "origin" in value and value["origin"] != "AUTHORED":
             raise ValueError("metrics must remain AUTHORED")
         if {"numerator", "denominator", "value"}.intersection(value):
+            if not {"numerator", "denominator", "value"}.issubset(value):
+                raise ValueError("fraction requires explicit numerator, denominator and value")
             numerator, denominator, fraction = (value.get(k) for k in ("numerator", "denominator", "value"))
             if type(numerator) is not int or type(denominator) is not int or not 0 <= numerator <= denominator:
                 raise ValueError("invalid fraction counts")
@@ -113,6 +115,8 @@ def _supervise(inventory: list[str], attempts: list[dict], evidence: object) -> 
         problems.append("skipped_tests")
     if type(evidence) is not dict:
         evidence = {}
+    if evidence.get("origin", "AUTHORED") != "AUTHORED" or evidence.get("runtime_verified", False) is not False:
+        raise ValueError("evidence flags must describe unverified AUTHORED fixtures")
     exit_code = evidence.get("process_exit")
     external = evidence.get("external_evidence")
     status = evidence.get("status")
