@@ -25,6 +25,17 @@ Infrastructure errors and unknowns retain distinct states. A pass/exit conflict
 is invalid. Supervisor green means only an internally consistent authored example;
 it never authorizes execution or demonstrates a genuine repair.
 
+Contract v1.1 optional `repetitions` is an array of run arrays, each validated
+against the original inventory separately. Repeated IDs across runs are allowed;
+duplicates within one run are invalid. Optional `repetition_evidence` is an aligned
+array of the same authored evidence objects. Absent evidence remains unknown.
+`repetition_supervisors` retains per-run states; the case supervisor combines
+after plus repetitions, prioritizing invalid, infra_error, then unknown. Empty
+declared repetitions cannot green. Fractions under metrics require integer
+`0 <= numerator <= denominator`, null value at denominator zero, and otherwise a
+finite value matching numerator/denominator. This checks declared consistency,
+not scientific eligibility or actual measurement.
+
 `model_projection` is the only model-facing object. It contains generated task
 IDs, sanitized requirement and optional visible text, and honest origin/mode.
 Original IDs, labels, patch tags, business expectations, inventories, evidence,

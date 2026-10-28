@@ -77,6 +77,27 @@ def _attempts(value: object) -> list[dict]:
     return result
 
 
+def _metrics(value: object) -> None:
+    """Validate declared authored fractions without inventing study statistics."""
+    if type(value) is dict:
+        if "origin" in value and value["origin"] != "AUTHORED":
+            raise ValueError("metrics must remain AUTHORED")
+        if {"numerator", "denominator", "value"}.intersection(value):
+            numerator, denominator, fraction = (value.get(k) for k in ("numerator", "denominator", "value"))
+            if type(numerator) is not int or type(denominator) is not int or not 0 <= numerator <= denominator:
+                raise ValueError("invalid fraction counts")
+            if denominator == 0:
+                if fraction is not None:
+                    raise ValueError("zero-denominator fraction must be null")
+            elif type(fraction) not in (int, float) or not math.isclose(fraction, numerator / denominator, rel_tol=1e-9, abs_tol=1e-12):
+                raise ValueError("fraction value disagrees with counts")
+        for item in value.values():
+            _metrics(item)
+    elif type(value) is list:
+        for item in value:
+            _metrics(item)
+
+
 def _supervise(inventory: list[str], attempts: list[dict], evidence: object) -> dict:
     """Classify source consistency only, never actual OS/process evidence."""
     ids = [a["test_id"] for a in attempts]
@@ -145,6 +166,7 @@ def prepare_demo_run(scenario: dict) -> dict:
         raise ValueError("fixture ledger must explicitly declare zero cost/liability and no live dispatch")
     if type(scenario.get("metrics")) is not dict:
         raise ValueError("authored metrics object required")
+    _metrics(scenario["metrics"])
     cases = scenario.get("cases")
     if type(cases) is not list or not 1 <= len(cases) <= 128:
         raise ValueError("expected 1..128 authored cases")
@@ -181,6 +203,29 @@ def prepare_demo_run(scenario: dict) -> dict:
         record = json.loads(_canonical(case))
         record["before_supervisor"] = _supervise(inventory, before, case.get("before_evidence"))
         record["supervisor"] = _supervise(inventory, after, case.get("after_evidence"))
+        if "repetitions" in case:
+            runs = case["repetitions"]
+            if type(runs) is not list:
+                raise ValueError("repetitions must be an array of run arrays")
+            evidence = case.get("repetition_evidence", [None] * len(runs))
+            if type(evidence) is not list or len(evidence) != len(runs):
+                raise ValueError("repetition evidence must align with runs")
+            summaries = [_supervise(inventory, _attempts(run), flags) for run, flags in zip(runs, evidence)]
+            record["repetition_supervisors"] = summaries
+            # Repeated IDs across distinct runs are valid. Each run is checked
+            # against the original inventory independently; nothing is flattened.
+            all_summaries = [record["supervisor"], *summaries]
+            overall = dict(record["supervisor"])
+            if not summaries:
+                overall.update(status="invalid", green=False, reasons=["zero_repetitions"])
+            else:
+                for state in ("invalid", "infra_error", "unknown"):
+                    if any(s["status"] == state for s in all_summaries):
+                        overall["status"] = state
+                        break
+                overall["green"] = all(s["green"] for s in all_summaries)
+                overall["reasons"] = list(dict.fromkeys(reason for s in all_summaries for reason in s["reasons"]))
+            record["supervisor"] = overall
         record["projection_id"] = view["id"]
         record["projection_hash"] = hashlib.sha256(_canonical(view)).hexdigest()
         prepared.append(record)
