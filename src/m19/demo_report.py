@@ -247,6 +247,9 @@ def _validate_run(run: dict) -> None:
                 checked = _phase(repetition, inventory_ids, evidence, summary)
                 if after_summary["green"] and not checked["green"]:
                     raise ValueError("overall green contradicts repeated-run supervisor")
+                severity = {"valid": 0, "unknown": 1, "infra_error": 2, "invalid": 3}
+                if severity[after_summary["status"]] < severity[checked["status"]]:
+                    raise ValueError("overall supervisor hides a repeated-run nonvalid state")
         elif "repetition_evidence" in case or "repetition_supervisors" in case:
             raise ValueError("orphan repetition metadata")
         if not {"expected_business", "observed_business"} <= case.keys():
