@@ -3,8 +3,8 @@ from math import isfinite
 import re
 
 from m19.demo_ledger import DemoLedger
+from m19.demo_pipeline import supervise_demo_run
 
-_OUTCOMES = {"pass", "fail", "skipped", "infra_error", "unknown"}
 _CATEGORIES = {"baseline_clean", "benign_repair", "false_repair", "silenced", "intermittent", "infra_error"}
 
 
@@ -12,34 +12,58 @@ def _id(value: object) -> bool:
     return isinstance(value, str) and re.fullmatch(r"[A-Za-z0-9_-]{1,128}", value) is not None
 
 
-def classify_outcomes(inventory: list[str], outcomes: list[dict], *, origin: str = "AUTHORED") -> dict:
-    """Classify one invented run; zero/missing/skipped/infra never become green."""
+def classify_outcomes(inventory: list[str], outcomes: list[dict], *,
+                      origin: str = "AUTHORED", evidence: dict | None = None) -> dict:
+    """One pure authored run via D3's public supervisor; absent flags stay unknown."""
     if origin != "AUTHORED":
         raise ValueError("only authored fixture outcomes are supported")
-    if (not isinstance(inventory, list) or len(inventory) > 32
-            or any(not _id(item) for item in inventory)
-            or not isinstance(outcomes, list) or len(outcomes) > 64):
-        raise ValueError("bounded explicit fixture inventory and outcomes required")
-    for item in outcomes:
-        if (not isinstance(item, dict) or set(item) != {"test_id", "outcome"}
-                or not _id(item["test_id"]) or not isinstance(item["outcome"], str)
-                or item["outcome"] not in _OUTCOMES):
-            raise ValueError("explicit supported fixture outcome required")
-    completed = [item["test_id"] for item in outcomes]
-    values = [item["outcome"] for item in outcomes]
-    result = {"status": "invalid", "green": False, "expected": len(inventory),
-              "completed": len(completed), "origin": "AUTHORED", "runtime_verified": False}
-    if not inventory or len(inventory) != len(set(inventory)):
-        return {**result, "reason": "zero or duplicate original inventory"}
-    if len(completed) != len(set(completed)) or set(completed) != set(inventory):
-        return {**result, "reason": "missing, duplicate or unexpected test inventory"}
+    return supervise_demo_run(inventory, outcomes, evidence)
+
+
+def _authored_flags(outcomes: list[dict]) -> dict:
+    """Invent flags for the fixed toy producer only, never for caller-supplied cases."""
+    values = [row["outcome"] for row in outcomes]
+    flags = {"origin": "AUTHORED", "runtime_verified": False,
+             "process_exit": None, "external_evidence": None, "status": "unknown"}
+    if not outcomes or "skipped" in values:
+        return {**flags, "status": "invalid", "external_evidence": False}
     if "infra_error" in values:
-        return {**result, "status": "infra_error", "reason": "infrastructure error, never flake or green"}
+        return {**flags, "status": "infra_error", "external_evidence": True}
     if "unknown" in values:
-        return {**result, "status": "unknown", "reason": "unknown outcome, never green"}
-    if "skipped" in values:
-        return {**result, "reason": "skipped inventory, never green"}
-    return {**result, "status": "valid", "green": all(v == "pass" for v in values), "reason": None}
+        return flags
+    return {**flags, "status": "valid", "external_evidence": True,
+            "process_exit": 0 if all(v == "pass" for v in values) else 1}
+
+
+def _case_supervisors(case: dict) -> tuple[dict, dict, list[dict]]:
+    """Match D3 phase/run aggregation using only the declared public helper."""
+    inventory = case["original_inventory"]
+    before = classify_outcomes(inventory, case["before"], evidence=case.get("before_evidence"))
+    after = classify_outcomes(inventory, case["after"], evidence=case.get("after_evidence"))
+    summaries = []
+    if "repetitions" in case:
+        runs = case["repetitions"]
+        if not isinstance(runs, list) or len(runs) > 32:
+            raise ValueError("bounded authored repetition vectors required")
+        flags = case.get("repetition_evidence", [None] * len(runs))
+        if not isinstance(flags, list) or len(flags) != len(runs):
+            raise ValueError("repetition evidence must align with run arrays")
+        summaries = [classify_outcomes(inventory, row, evidence=flag)
+                     for row, flag in zip(runs, flags)]
+        overall = dict(after)
+        if not summaries:
+            overall.update(status="invalid", green=False, reasons=["zero_repetitions"])
+        else:
+            all_summaries = [after, *summaries]
+            for state in ("invalid", "infra_error", "unknown"):
+                if any(row["status"] == state for row in all_summaries):
+                    overall["status"] = state
+                    break
+            overall["green"] = all(row["green"] for row in all_summaries)
+            overall["reasons"] = list(dict.fromkeys(
+                reason for row in all_summaries for reason in row["reasons"]))
+        after = overall
+    return before, after, summaries
 
 
 def _edit_similarity(left: object, right: object) -> float:
@@ -60,10 +84,10 @@ def _snapshot(value: object) -> dict:
             or set(value) != {"id", "role", "name", "ancestors", "origin"}
             or value["origin"] != "AUTHORED" or not _id(value["id"])):
         raise ValueError("authored locator snapshot required")
-    if (not isinstance(value["role"], str) or not 1 <= len(value["role"].strip()) <= 64
-            or not isinstance(value["name"], str) or not 1 <= len(value["name"].strip()) <= 256
+    if (not isinstance(value["role"], str) or not 1 <= len(value["role"]) <= 64 or not value["role"].strip()
+            or not isinstance(value["name"], str) or not 1 <= len(value["name"]) <= 256 or not value["name"].strip()
             or not isinstance(value["ancestors"], list) or len(value["ancestors"]) > 8
-            or any(not isinstance(x, str) or not 1 <= len(x.strip()) <= 64 for x in value["ancestors"])):
+            or any(not isinstance(x, str) or not 1 <= len(x) <= 64 or not x.strip() for x in value["ancestors"])):
         raise ValueError("bounded role/name/ancestor path required")
     return {"id": value["id"], "role": value["role"].strip().casefold(),
             "name": " ".join(value["name"].casefold().split()),
@@ -116,7 +140,7 @@ def compute_demo_metrics(cases: list[dict]) -> dict:
     seen = set()
     after_states = {"valid": 0, "invalid": 0, "unknown": 0, "infra_error": 0}
     green = benign = benign_n = false = false_n = flake = flake_n = 0
-    flake_states = {"invalid": 0, "unknown": 0, "infra_error": 0}
+    flake_states = {"invalid": 0, "unknown": 0, "infra_error": 0, "insufficient_repetitions": 0}
     for case in cases:
         if (not isinstance(case, dict) or case.get("origin") != "AUTHORED"
                 or case.get("mode", "fixture") != "fixture"
@@ -128,8 +152,7 @@ def compute_demo_metrics(cases: list[dict]) -> dict:
         required = {"original_inventory", "before", "after", "expected_business", "observed_business"}
         if not required <= case.keys():
             raise ValueError("explicit inventories, outcomes and business fixtures required")
-        before = classify_outcomes(case["original_inventory"], case["before"])
-        after = classify_outcomes(case["original_inventory"], case["after"])
+        before, after, repetition_summaries = _case_supervisors(case)
         after_states[after["status"]] += 1
         green += int(after["green"])
         eligible = before["status"] == after["status"] == "valid" and not before["green"]
@@ -140,16 +163,13 @@ def compute_demo_metrics(cases: list[dict]) -> dict:
         if case["category"] == "false_repair" and eligible:
             false_n += 1
             false += int(after["green"] and not business_match)
-        repetitions = case.get("repetitions", [])
-        if not isinstance(repetitions, list) or len(repetitions) > 32:
-            raise ValueError("bounded authored repetition vectors required")
-        if repetitions:
-            inspected = [classify_outcomes(case["original_inventory"], row) for row in repetitions]
-            statuses = {row["status"] for row in inspected}
-            if statuses != {"valid"}:
-                key = ("infra_error" if "infra_error" in statuses else
-                       "unknown" if "unknown" in statuses else "invalid")
-                flake_states[key] += 1
+        if "repetitions" in case:
+            repetitions = case["repetitions"]
+            if len(repetition_summaries) < 2:
+                flake_states["insufficient_repetitions"] += 1
+                continue
+            if after["status"] != "valid":
+                flake_states[after["status"]] += 1
                 continue
             flake_n += 1
             by_test = {test: set() for test in case["original_inventory"]}
@@ -158,7 +178,8 @@ def compute_demo_metrics(cases: list[dict]) -> dict:
                     by_test[attempt["test_id"]].add(attempt["outcome"])
             flake += int(any(values == {"pass", "fail"} for values in by_test.values()))
     return {
-        "origin": "AUTHORED", "mode": "fixture", "runtime_verified": False, "not_measured": True,
+        "origin": "AUTHORED", "label": "fixture-derived; not scientific results",
+        "mode": "fixture", "runtime_verified": False, "not_measured": True,
         "metric_scope": "invented vectors only; invalid/unknown/infra counts shown, no study estimate",
         "total_cases": len(cases), "after_status_counts": after_states,
         "green_after_fraction": _fraction(green, after_states["valid"]),
@@ -222,8 +243,13 @@ def build_demo_scenario() -> dict:
     cases = [benign, wrong, silenced, intermittent, infra]
     ledger = DemoLedger()
     for case in cases:
-        case["fixture_evaluation"] = {
-            phase: classify_outcomes(case["original_inventory"], case[phase]) for phase in ("before", "after")}
+        case["before_evidence"] = _authored_flags(case["before"])
+        case["after_evidence"] = _authored_flags(case["after"])
+        if "repetitions" in case:
+            case["repetition_evidence"] = [_authored_flags(row) for row in case["repetitions"]]
+        before, after, repetitions = _case_supervisors(case)
+        case["fixture_evaluation"] = {"before": before, "after": after,
+                                      "repetition_supervisors": repetitions}
         for phase in ("before", "after"):
             ledger.record_attempt(case["id"], phase, case[phase])
         for row in case.get("repetitions", []):
