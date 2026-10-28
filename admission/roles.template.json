@@ -1,62 +1,37 @@
 {
-  "schema_version": "m19-role-fragment-draft-v1",
+  "schema_version": "m19-role-fragment-draft-v2",
   "status": "PENDING",
   "gate_a": "NO-GO",
   "roles": {
     "builder": {
-      "status": "PENDING",
-      "identity": null,
+      "actor_id": null,
       "appointment_reference": null,
-      "exposure": {
-        "status": "PENDING",
-        "record_reference": null,
-        "complete": null,
-        "independence_verdict": null
-      }
+      "exposure": null,
+      "independence_confirmed": null
     },
     "h0_author": {
-      "status": "PENDING",
-      "identity": null,
+      "actor_id": null,
       "appointment_reference": null,
-      "exposure": {
-        "status": "PENDING",
-        "record_reference": null,
-        "complete": null,
-        "independence_verdict": null
-      }
+      "exposure": null,
+      "independence_confirmed": null
     },
     "h0_reviewer": {
-      "status": "PENDING",
-      "identity": null,
+      "actor_id": null,
       "appointment_reference": null,
-      "exposure": {
-        "status": "PENDING",
-        "record_reference": null,
-        "complete": null,
-        "independence_verdict": null
-      }
+      "exposure": null,
+      "independence_confirmed": null
     },
     "custodian": {
-      "status": "PENDING",
-      "identity": null,
+      "actor_id": null,
       "appointment_reference": null,
-      "exposure": {
-        "status": "PENDING",
-        "record_reference": null,
-        "complete": null,
-        "independence_verdict": null
-      }
+      "exposure": null,
+      "independence_confirmed": null
     },
     "labeller": {
-      "status": "PENDING",
-      "identity": null,
+      "actor_id": null,
       "appointment_reference": null,
-      "exposure": {
-        "status": "PENDING",
-        "record_reference": null,
-        "complete": null,
-        "independence_verdict": null
-      }
+      "exposure": null,
+      "independence_confirmed": null
     }
   },
   "constraints": {
@@ -68,6 +43,10 @@
       [
         "builder",
         "custodian"
+      ],
+      [
+        "h0_author",
+        "h0_reviewer"
       ]
     ],
     "callsign_difference_is_not_independence": true,
@@ -125,8 +104,12 @@
     "other_seat_exposure": "unknown; no assertion"
   },
   "consumer_notes": {
-    "owner": "DL1 final schema; INT reconciles",
-    "mapping": "Map roles explicitly into final admission.json. This fragment is deliberately incomplete and must not pass Gate A. Constraints are declared policy, not checks executed.",
-    "scope_approval": null
+    "owner": "DL1 final packet/schema; INT reconciles",
+    "schema_reference": "schemas/admission.schema.json at 6798459",
+    "mapping": "roles has the D1 field names. Null actor_id/appointment_reference/exposure/independence_confirmed deliberately fails structural and semantic validation. Unknown exposure is null, not []. Keep preparer metadata/constraints outside final packet.",
+    "attestation_status": "PENDING",
+    "complete_declaration_status": "PENDING_ATTESTATION_VERIFICATION, never GO; packet_valid is not execution_authorized",
+    "scope_approval": null,
+    "ordering_disposition": null
   }
 }

@@ -1,8 +1,22 @@
 {
-  "schema_version": "m19-observer-fragment-draft-v1",
+  "schema_version": "m19-observer-fragment-draft-v2",
   "status": "PENDING",
   "gate_a": "NO-GO",
   "observer_boundaries": {
+    "worker_no_control_access": null,
+    "model_no_oracle_access": null,
+    "builder_no_heldout_access": null,
+    "custody_outside_repo": null,
+    "reference": null
+  },
+  "consumer_notes": {
+    "owner": "DL1 final packet/schema; INT reconciles",
+    "schema_reference": "schemas/admission.schema.json at 6798459",
+    "mapping": "observer_boundaries has D1 declaration/reference field names. All null: no actual declaration or receipt supplied. design_policy is intended policy only, not packet fields or proven enforcement. Keep metadata outside final packet.",
+    "attestation_status": "PENDING",
+    "complete_declaration_status": "PENDING_ATTESTATION_VERIFICATION, never GO"
+  },
+  "design_policy": {
     "status": "PENDING",
     "policy_status": "DECLARED_ONLY",
     "implementation_reference": null,
@@ -54,9 +68,5 @@
       "run_outcomes": "future trusted discovery/reporter/process-exit/state joins; missing/conflicting evidence UNKNOWN, never green",
       "implementation_status": "PENDING; no observer/runner/sanitizer implemented here"
     }
-  },
-  "consumer_notes": {
-    "owner": "DL1 validator; INT reconciliation",
-    "mapping": "Map observer_boundaries into final schema; declared-only policy is not verified enforcement or a Gate A approval. Runtime containment stays separate P4/Gate B evidence."
   }
 }
