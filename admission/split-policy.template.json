@@ -1,0 +1,17 @@
+{
+  "family_split": true,
+  "disjoint_families": true,
+  "floors": {
+    "dev": {
+      "R": 12,
+      "B": 6,
+      "families": 4
+    },
+    "heldout": {
+      "R": 24,
+      "B": 12,
+      "families": 8,
+      "R_families": 5
+    }
+  }
+}
