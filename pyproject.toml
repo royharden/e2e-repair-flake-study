@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "m19-study"
+version = "0.1.0"
+description = "Source foundation for an E2E repair and flake study; no measured results"
+requires-python = ">=3.12"
+dependencies = []
+
+[project.scripts]
+m19 = "m19.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
