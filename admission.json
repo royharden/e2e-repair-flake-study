@@ -1,0 +1,224 @@
+{
+  "rights_declarations": [
+    {
+      "source_id": "source-001",
+      "permitted": null,
+      "basis": null,
+      "reference": null,
+      "declared_by": null
+    },
+    {
+      "source_id": "source-002",
+      "permitted": null,
+      "basis": null,
+      "reference": null,
+      "declared_by": null
+    },
+    {
+      "source_id": "source-003",
+      "permitted": null,
+      "basis": null,
+      "reference": null,
+      "declared_by": null
+    },
+    {
+      "source_id": "source-004",
+      "permitted": null,
+      "basis": null,
+      "reference": null,
+      "declared_by": null
+    },
+    {
+      "source_id": "source-005",
+      "permitted": null,
+      "basis": null,
+      "reference": null,
+      "declared_by": null
+    },
+    {
+      "source_id": "source-006",
+      "permitted": null,
+      "basis": null,
+      "reference": null,
+      "declared_by": null
+    },
+    {
+      "source_id": "source-007",
+      "permitted": null,
+      "basis": null,
+      "reference": null,
+      "declared_by": null
+    },
+    {
+      "source_id": "source-008",
+      "permitted": null,
+      "basis": null,
+      "reference": null,
+      "declared_by": null
+    },
+    {
+      "source_id": "source-009",
+      "permitted": null,
+      "basis": null,
+      "reference": null,
+      "declared_by": null
+    },
+    {
+      "source_id": "source-010",
+      "permitted": null,
+      "basis": null,
+      "reference": null,
+      "declared_by": null
+    },
+    {
+      "source_id": "source-011",
+      "permitted": null,
+      "basis": null,
+      "reference": null,
+      "declared_by": null
+    }
+  ],
+  "originality": {
+    "original_sut": null,
+    "declaration": null,
+    "reference": null,
+    "declared_by": null
+  },
+  "roles": {
+    "builder": {
+      "actor_id": null,
+      "appointment_reference": null,
+      "exposure": null,
+      "independence_confirmed": null
+    },
+    "h0_author": {
+      "actor_id": null,
+      "appointment_reference": null,
+      "exposure": null,
+      "independence_confirmed": null
+    },
+    "h0_reviewer": {
+      "actor_id": null,
+      "appointment_reference": null,
+      "exposure": null,
+      "independence_confirmed": null
+    },
+    "custodian": {
+      "actor_id": null,
+      "appointment_reference": null,
+      "exposure": null,
+      "independence_confirmed": null
+    },
+    "labeller": {
+      "actor_id": null,
+      "appointment_reference": null,
+      "exposure": null,
+      "independence_confirmed": null
+    }
+  },
+  "split_policy": {
+    "family_split": true,
+    "disjoint_families": true,
+    "floors": {
+      "dev": {
+        "R": 12,
+        "B": 6,
+        "families": 4
+      },
+      "heldout": {
+        "R": 24,
+        "B": 12,
+        "families": 8,
+        "R_families": 5
+      }
+    }
+  },
+  "observer_boundaries": {
+    "worker_no_control_access": null,
+    "model_no_oracle_access": null,
+    "builder_no_heldout_access": null,
+    "custody_outside_repo": null,
+    "reference": null
+  },
+  "source_inventory": [
+    {
+      "id": "source-001",
+      "reference": "git:abbbae81e6401ec45a514762018dfb4b0967ae9c:.gitignore",
+      "purpose": "construction_reference_only",
+      "provenance": "existing_local_committed_source; exact Git blob SHA256 be9b49a0747d97ac9e6902ffed2a16a89c1c2a25615812d61c8f3a2da892d1dc; historical baseline only, excludes P1 and later integrations"
+    },
+    {
+      "id": "source-002",
+      "reference": "git:abbbae81e6401ec45a514762018dfb4b0967ae9c:README.md",
+      "purpose": "construction_reference_only",
+      "provenance": "existing_local_committed_source; exact Git blob SHA256 3d43efe7db53cc6b7a2aa8c976243362ebfc65769f3981b8cadbef04565fa926; historical baseline only, excludes P1 and later integrations"
+    },
+    {
+      "id": "source-003",
+      "reference": "git:abbbae81e6401ec45a514762018dfb4b0967ae9c:docs/CONTRACTS.md",
+      "purpose": "construction_reference_only",
+      "provenance": "existing_local_committed_source; exact Git blob SHA256 9fe25c12004baa9b787479310edcf909f9e49ff313e55d1e309ff30ed3c00789; historical baseline only, excludes P1 and later integrations"
+    },
+    {
+      "id": "source-004",
+      "reference": "git:abbbae81e6401ec45a514762018dfb4b0967ae9c:docs/GRAMMAR.md",
+      "purpose": "construction_reference_only",
+      "provenance": "existing_local_committed_source; exact Git blob SHA256 481826391c65063cafc06d0e5c471bbd475e74e122d6e24e331133e0c8865e39; historical baseline only, excludes P1 and later integrations"
+    },
+    {
+      "id": "source-005",
+      "reference": "git:abbbae81e6401ec45a514762018dfb4b0967ae9c:node/testlens/package.json",
+      "purpose": "construction_reference_only",
+      "provenance": "existing_local_committed_source; exact Git blob SHA256 b97e5fdac19463ad157a26b4d1e9d8263fdda0a783417aac0db88cca54e5361d; historical baseline only, excludes P1 and later integrations"
+    },
+    {
+      "id": "source-006",
+      "reference": "git:abbbae81e6401ec45a514762018dfb4b0967ae9c:node/testlens/src/cli.mjs",
+      "purpose": "construction_reference_only",
+      "provenance": "existing_local_committed_source; exact Git blob SHA256 c90d7bd5e631d397f4841405eeba5c8c5f0011b8cf81f5087f9e85fa39eb351e; historical baseline only, excludes P1 and later integrations"
+    },
+    {
+      "id": "source-007",
+      "reference": "git:abbbae81e6401ec45a514762018dfb4b0967ae9c:node/testlens/src/index.mjs",
+      "purpose": "construction_reference_only",
+      "provenance": "existing_local_committed_source; exact Git blob SHA256 26316888fefd751c912784de2edac807b2127b889bf321027542c931d7c917df; historical baseline only, excludes P1 and later integrations"
+    },
+    {
+      "id": "source-008",
+      "reference": "git:abbbae81e6401ec45a514762018dfb4b0967ae9c:pyproject.toml",
+      "purpose": "construction_reference_only",
+      "provenance": "existing_local_committed_source; exact Git blob SHA256 89943105e374dadf7cddb0cb61bb470db9f97aa696814ee02df3547ab65018f5; historical baseline only, excludes P1 and later integrations"
+    },
+    {
+      "id": "source-009",
+      "reference": "git:abbbae81e6401ec45a514762018dfb4b0967ae9c:src/m19/__init__.py",
+      "purpose": "construction_reference_only",
+      "provenance": "existing_local_committed_source; exact Git blob SHA256 b71535dbbba6f8a6b35e0171426ac076ce6603008674ab6d951fb6c8ed3769fc; historical baseline only, excludes P1 and later integrations"
+    },
+    {
+      "id": "source-010",
+      "reference": "git:abbbae81e6401ec45a514762018dfb4b0967ae9c:src/m19/cli.py",
+      "purpose": "construction_reference_only",
+      "provenance": "existing_local_committed_source; exact Git blob SHA256 926e33937097b9dc34e84699ae730f7e9e29f63e5abdc18b8a686fa54edf757f; historical baseline only, excludes P1 and later integrations"
+    },
+    {
+      "id": "source-011",
+      "reference": "git:abbbae81e6401ec45a514762018dfb4b0967ae9c:src/m19/contracts/__init__.py",
+      "purpose": "construction_reference_only",
+      "provenance": "existing_local_committed_source; exact Git blob SHA256 9f61a58453f5cc0ce715890347099260f68b7e469c3ffde1bf37e8a8dbb3ffce; historical baseline only, excludes P1 and later integrations"
+    }
+  ],
+  "scope_approval": {
+    "by": null,
+    "reference": null,
+    "approved_scope": null,
+    "timestamp": null
+  },
+  "ordering_disposition": {
+    "by": null,
+    "reference": null,
+    "disposition": null,
+    "timestamp": null,
+    "prior_code_acknowledged": null
+  }
+}
