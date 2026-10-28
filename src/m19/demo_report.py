@@ -87,7 +87,7 @@ def _validate_metrics(metrics: object) -> None:
                 if denominator == 0:
                     if fraction is not None:
                         raise ValueError("empty denominator requires null value")
-                elif (type(fraction) not in (int, float) or not math.isfinite(fraction)
+                elif (type(fraction) not in (int, float) or not math.isfinite(fraction) or not 0 <= fraction <= 1
                       or not math.isclose(fraction, numerator / denominator, rel_tol=1e-12, abs_tol=1e-12)):
                     raise ValueError("fraction does not match counters")
                 for child_key, child in value.items():
