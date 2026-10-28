@@ -1,0 +1,478 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "M19 P1 administrative declaration packet",
+  "description": "Structure only. Cross references, identity, family arithmetic and authentic receipt verification require the consumer/authorized owner. This schema never grants GO.",
+  "type": "object",
+  "required": [
+    "rights_declarations",
+    "originality",
+    "roles",
+    "split_policy",
+    "observer_boundaries",
+    "source_inventory",
+    "scope_approval",
+    "ordering_disposition"
+  ],
+  "properties": {
+    "rights_declarations": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "source_id",
+          "permitted",
+          "basis",
+          "reference",
+          "declared_by"
+        ],
+        "properties": {
+          "source_id": {
+            "allOf": [
+              {
+                "$ref": "#/$defs/text"
+              },
+              {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_-]{1,128}$"
+              }
+            ]
+          },
+          "permitted": {
+            "const": true
+          },
+          "basis": {
+            "$ref": "#/$defs/text"
+          },
+          "reference": {
+            "$ref": "#/$defs/text"
+          },
+          "declared_by": {
+            "$ref": "#/$defs/text"
+          }
+        }
+      }
+    },
+    "originality": {
+      "type": "object",
+      "required": [
+        "original_sut",
+        "declaration",
+        "reference",
+        "declared_by"
+      ],
+      "properties": {
+        "original_sut": {
+          "const": true
+        },
+        "declaration": {
+          "$ref": "#/$defs/text"
+        },
+        "reference": {
+          "$ref": "#/$defs/text"
+        },
+        "declared_by": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "roles": {
+      "type": "object",
+      "required": [
+        "builder",
+        "h0_author",
+        "h0_reviewer",
+        "custodian",
+        "labeller"
+      ],
+      "properties": {
+        "builder": {
+          "type": "object",
+          "required": [
+            "actor_id",
+            "appointment_reference",
+            "exposure",
+            "independence_confirmed"
+          ],
+          "properties": {
+            "actor_id": {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/text"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9_-]{1,128}$"
+                }
+              ]
+            },
+            "appointment_reference": {
+              "$ref": "#/$defs/text"
+            },
+            "exposure": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/text"
+              }
+            },
+            "independence_confirmed": {
+              "const": true
+            }
+          }
+        },
+        "h0_author": {
+          "type": "object",
+          "required": [
+            "actor_id",
+            "appointment_reference",
+            "exposure",
+            "independence_confirmed"
+          ],
+          "properties": {
+            "actor_id": {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/text"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9_-]{1,128}$"
+                }
+              ]
+            },
+            "appointment_reference": {
+              "$ref": "#/$defs/text"
+            },
+            "exposure": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/text"
+              }
+            },
+            "independence_confirmed": {
+              "const": true
+            }
+          }
+        },
+        "h0_reviewer": {
+          "type": "object",
+          "required": [
+            "actor_id",
+            "appointment_reference",
+            "exposure",
+            "independence_confirmed"
+          ],
+          "properties": {
+            "actor_id": {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/text"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9_-]{1,128}$"
+                }
+              ]
+            },
+            "appointment_reference": {
+              "$ref": "#/$defs/text"
+            },
+            "exposure": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/text"
+              }
+            },
+            "independence_confirmed": {
+              "const": true
+            }
+          }
+        },
+        "custodian": {
+          "type": "object",
+          "required": [
+            "actor_id",
+            "appointment_reference",
+            "exposure",
+            "independence_confirmed"
+          ],
+          "properties": {
+            "actor_id": {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/text"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9_-]{1,128}$"
+                }
+              ]
+            },
+            "appointment_reference": {
+              "$ref": "#/$defs/text"
+            },
+            "exposure": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/text"
+              }
+            },
+            "independence_confirmed": {
+              "const": true
+            }
+          }
+        },
+        "labeller": {
+          "type": "object",
+          "required": [
+            "actor_id",
+            "appointment_reference",
+            "exposure",
+            "independence_confirmed"
+          ],
+          "properties": {
+            "actor_id": {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/text"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9_-]{1,128}$"
+                }
+              ]
+            },
+            "appointment_reference": {
+              "$ref": "#/$defs/text"
+            },
+            "exposure": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/text"
+              }
+            },
+            "independence_confirmed": {
+              "const": true
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "split_policy": {
+      "type": "object",
+      "required": [
+        "family_split",
+        "disjoint_families",
+        "floors"
+      ],
+      "properties": {
+        "family_split": {
+          "const": true
+        },
+        "disjoint_families": {
+          "const": true
+        },
+        "floors": {
+          "type": "object",
+          "required": [
+            "dev",
+            "heldout"
+          ],
+          "properties": {
+            "dev": {
+              "type": "object",
+              "required": [
+                "R",
+                "B",
+                "families"
+              ],
+              "properties": {
+                "R": {
+                  "type": "integer",
+                  "minimum": 12
+                },
+                "B": {
+                  "type": "integer",
+                  "minimum": 6
+                },
+                "families": {
+                  "type": "integer",
+                  "minimum": 4
+                }
+              }
+            },
+            "heldout": {
+              "type": "object",
+              "required": [
+                "R",
+                "B",
+                "families",
+                "R_families"
+              ],
+              "properties": {
+                "R": {
+                  "type": "integer",
+                  "minimum": 24
+                },
+                "B": {
+                  "type": "integer",
+                  "minimum": 12
+                },
+                "families": {
+                  "type": "integer",
+                  "minimum": 8
+                },
+                "R_families": {
+                  "type": "integer",
+                  "minimum": 5
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "observer_boundaries": {
+      "type": "object",
+      "required": [
+        "worker_no_control_access",
+        "model_no_oracle_access",
+        "builder_no_heldout_access",
+        "custody_outside_repo",
+        "reference"
+      ],
+      "properties": {
+        "worker_no_control_access": {
+          "const": true
+        },
+        "model_no_oracle_access": {
+          "const": true
+        },
+        "builder_no_heldout_access": {
+          "const": true
+        },
+        "custody_outside_repo": {
+          "const": true
+        },
+        "reference": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "source_inventory": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "reference",
+          "purpose",
+          "provenance"
+        ],
+        "properties": {
+          "id": {
+            "allOf": [
+              {
+                "$ref": "#/$defs/text"
+              },
+              {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_-]{1,128}$"
+              }
+            ]
+          },
+          "reference": {
+            "$ref": "#/$defs/text"
+          },
+          "purpose": {
+            "$ref": "#/$defs/text"
+          },
+          "provenance": {
+            "$ref": "#/$defs/text"
+          }
+        }
+      }
+    },
+    "scope_approval": {
+      "type": "object",
+      "required": [
+        "by",
+        "reference",
+        "approved_scope",
+        "timestamp"
+      ],
+      "properties": {
+        "by": {
+          "const": "Roy Harden"
+        },
+        "reference": {
+          "$ref": "#/$defs/text"
+        },
+        "approved_scope": {
+          "$ref": "#/$defs/text"
+        },
+        "timestamp": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/text"
+            },
+            {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\\.[0-9]+)?(Z|[+-]([01][0-9]|2[0-3]):[0-5][0-9])$"
+            }
+          ]
+        }
+      }
+    },
+    "ordering_disposition": {
+      "type": "object",
+      "required": [
+        "by",
+        "reference",
+        "disposition",
+        "timestamp",
+        "prior_code_acknowledged"
+      ],
+      "properties": {
+        "by": {
+          "const": "Roy Harden"
+        },
+        "reference": {
+          "$ref": "#/$defs/text"
+        },
+        "disposition": {
+          "$ref": "#/$defs/text"
+        },
+        "timestamp": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/text"
+            },
+            {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\\.[0-9]+)?(Z|[+-]([01][0-9]|2[0-3]):[0-5][0-9])$"
+            }
+          ]
+        },
+        "prior_code_acknowledged": {
+          "const": true
+        }
+      }
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "text": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S",
+      "not": {
+        "pattern": "[<>]|(^|[^A-Za-z0-9])([Pp][Ee][Nn][Dd][Ii][Nn][Gg]|[Pp][Ll][Aa][Cc][Ee][Hh][Oo][Ll][Dd][Ee][Rr]|[Uu][Nn][Aa][Ss][Ss][Ii][Gg][Nn][Ee][Dd]|[Uu][Nn][Kk][Nn][Oo][Ww][Nn]|[Tt][Oo][Dd][Oo]|[Tt][Bb][Dd]|[Dd][Rr][Aa][Ff][Tt]|[Nn][Uu][Ll][Ll]|[Nn][Oo][Nn][Ee])($|[^A-Za-z0-9])"
+      }
+    }
+  }
+}
