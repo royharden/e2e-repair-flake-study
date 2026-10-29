@@ -1,0 +1,115 @@
+{
+  "schema_version": "m19-role-fragment-draft-v2",
+  "status": "PENDING",
+  "gate_a": "NO-GO",
+  "roles": {
+    "builder": {
+      "actor_id": null,
+      "appointment_reference": null,
+      "exposure": null,
+      "independence_confirmed": null
+    },
+    "h0_author": {
+      "actor_id": null,
+      "appointment_reference": null,
+      "exposure": null,
+      "independence_confirmed": null
+    },
+    "h0_reviewer": {
+      "actor_id": null,
+      "appointment_reference": null,
+      "exposure": null,
+      "independence_confirmed": null
+    },
+    "custodian": {
+      "actor_id": null,
+      "appointment_reference": null,
+      "exposure": null,
+      "independence_confirmed": null
+    },
+    "labeller": {
+      "actor_id": null,
+      "appointment_reference": null,
+      "exposure": null,
+      "independence_confirmed": null
+    }
+  },
+  "constraints": {
+    "distinct_actual_sessions": [
+      [
+        "builder",
+        "h0_author"
+      ],
+      [
+        "builder",
+        "custodian"
+      ],
+      [
+        "h0_author",
+        "h0_reviewer"
+      ]
+    ],
+    "callsign_difference_is_not_independence": true,
+    "all_five_appointments_required": true,
+    "h0_freeze_before_any_variant_authored": true,
+    "appointment_and_exposure_review_required": true
+  },
+  "observed_preparer_access": {
+    "actor": "0B42_Codex_gpt-61-sol_N20M19DL2_D2",
+    "session_id": "01a18130-5aca-7e62-8c7e-888f9b534ea6",
+    "scope": "partial self-observation for administrative preparation only; not a study-role exposure attestation",
+    "complete": false,
+    "events": [
+      {
+        "action": "read",
+        "root": "OUTER",
+        "path": "planning/promoted/PLAN-M19-v1.md"
+      },
+      {
+        "action": "read",
+        "root": "OUTER",
+        "path": "AGENTS.md"
+      },
+      {
+        "action": "read",
+        "root": "INNER",
+        "path": "README.md"
+      },
+      {
+        "action": "read",
+        "root": "INNER",
+        "path": "src/m19/contracts/__init__.py"
+      },
+      {
+        "action": "author",
+        "root": "INNER",
+        "path": "docs/DATA.md"
+      },
+      {
+        "action": "author",
+        "root": "INNER",
+        "path": "docs/SOURCE-INVENTORY.md"
+      },
+      {
+        "action": "author",
+        "root": "INNER",
+        "path": "admission/source-inventory.template.json"
+      },
+      {
+        "action": "author",
+        "root": "INNER",
+        "path": "data-provenance.jsonl"
+      }
+    ],
+    "other_seat_exposure": "unknown; no assertion"
+  },
+  "consumer_notes": {
+    "owner": "DL1 final packet/schema; INT reconciles",
+    "schema_reference": "schemas/admission.schema.json at 6798459",
+    "mapping": "roles has the D1 field names. Null actor_id/appointment_reference/exposure/independence_confirmed deliberately fails structural and semantic validation. Unknown exposure is null, not []. Keep preparer metadata/constraints outside final packet.",
+    "attestation_status": "PENDING",
+    "complete_declaration_status": "PENDING_ATTESTATION_VERIFICATION, never GO; packet_valid is not execution_authorized",
+    "scope_approval": null,
+    "ordering_disposition": null
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "schema_version": "m19-observer-fragment-draft-v2",
+  "status": "PENDING",
+  "gate_a": "NO-GO",
+  "observer_boundaries": {
+    "worker_no_control_access": null,
+    "model_no_oracle_access": null,
+    "builder_no_heldout_access": null,
+    "custody_outside_repo": null,
+    "reference": null
+  },
+  "consumer_notes": {
+    "owner": "DL1 final packet/schema; INT reconciles",
+    "schema_reference": "schemas/admission.schema.json at 6798459",
+    "mapping": "observer_boundaries has D1 declaration/reference field names. All null: no actual declaration or receipt supplied. design_policy is intended policy only, not packet fields or proven enforcement. Keep metadata outside final packet.",
+    "attestation_status": "PENDING",
+    "complete_declaration_status": "PENDING_ATTESTATION_VERIFICATION, never GO"
+  },
+  "design_policy": {
+    "status": "PENDING",
+    "policy_status": "DECLARED_ONLY",
+    "implementation_reference": null,
+    "verification_reference": null,
+    "custody": {
+      "location_class": "OUTER custody, outside INNER, worker images and all mounts",
+      "access": "independently appointed custodian only",
+      "prequalification_log": "separate from one-time campaign reveal log",
+      "builder_and_agents": "must not inspect held-out truth; exposure retires affected cases",
+      "contents": "not inspected or populated by this fragment"
+    },
+    "worker": {
+      "allowed": "public SUT UI, read-only suite, bounded /out artifacts",
+      "forbidden": [
+        "SUT source",
+        "oracle/control/custody files",
+        "Docker socket",
+        "host credentials",
+        "external network and host gateway"
+      ],
+      "qualification": "P4 live containment receipt required before any suite, including fixtures"
+    },
+    "model_projection": {
+      "allowed": [
+        "sanitized DOM/accessibility text",
+        "sanitized screenshots",
+        "bounded sanitized error and step summaries"
+      ],
+      "forbidden": [
+        "SUT source/source maps",
+        "variant labels/patches/seeds",
+        "oracle/control/source paths",
+        "data-oracle-* identity hooks",
+        "scripts/comments/control URLs",
+        "raw traces/videos",
+        "evaluator and custody files"
+      ],
+      "sanitizer": "future single deterministic projection; every model-facing artifact must pass it; projection hashes recorded",
+      "raw_artifacts": "evaluator-side only, not model-facing",
+      "repair_exception": "H0 source is an explicitly allowed input to healer R2 only, never SUT source or oracle truth"
+    },
+    "oracle_observer": {
+      "access": "independent custodian privileged host-side observer; never exposed to worker/model",
+      "expectations": "computed from signed SUT spec worked examples, no imports from SUT/product implementation",
+      "evidence_status": "PENDING"
+    },
+    "integrity": {
+      "reset_receipts": "future host-authenticated state, seed, container/environment and observer hashes",
+      "run_outcomes": "future trusted discovery/reporter/process-exit/state joins; missing/conflicting evidence UNKNOWN, never green",
+      "implementation_status": "PENDING; no observer/runner/sanitizer implemented here"
+    }
+  }
+}

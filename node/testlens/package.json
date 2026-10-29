@@ -1,0 +1,9 @@
+{
+  "name": "m19-testlens",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Non-executing positive grammar and inventory foundation",
+  "dependencies": { "typescript": "5.9.3" },
+  "bin": { "testlens": "src/cli.mjs" }
+}
